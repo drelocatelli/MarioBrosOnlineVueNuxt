@@ -1,5 +1,25 @@
 
 <script setup>
+import {socket} from '../socket.ts';
+
+const online = ref(false);
+const transport = ref("N/A");
+
+// ---------------------------------------------------- GLOBAL SOCKET
+onMounted(() => {
+  Game.socket.next(socket);
+});
+
+// ---------------------------------------------------- DISCONNECT
+function onDisconnect() {
+  online.value = false;
+  transport.value = "N/A";
+}
+
+socket.on("disconnect", onDisconnect);
+
+const {data} = await useFetch('https://api.ipify.org?format=json');
+
 useHead({
     title: 'Super Mario Bros Online',
     script: [
@@ -38,10 +58,13 @@ useHead({
     
   ],
 });
-
 </script>
 
 <template>
+  <div style="z-index: 1; position: fixed; right: 15px; top: 15px; user-select: none; 
+    text-shadow: 1px 1px 0px #fff, -2px -1px 0px #fff, -2px 1px 0px #fff; font-weight: bold; font-size: 26px;">
+    {{ data.ip }}
+  </div>
     <div>
         <div id="game">
           <div id="content">

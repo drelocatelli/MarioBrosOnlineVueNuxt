@@ -33,7 +33,7 @@ class Player {
     createElement() {
         this.element = document.createElement('div');
         this.element.classList.add('player');
-        this.element.style.id = this.id;
+        this.element.id = this.id;
         this.element.style.width = this.width + 'px';
         this.element.style.height = this.height + 'px';
         this.element.style.background = this.background;

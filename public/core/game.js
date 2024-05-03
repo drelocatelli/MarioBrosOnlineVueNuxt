@@ -5,6 +5,8 @@ class Game {
     static area = document.querySelector('#game').getBoundingClientRect();
     static element = document.getElementById('game');
     static currentGame = new BehaviorSubject(undefined);
+    static socket = new BehaviorSubject(undefined);
+    
     platforms = new BehaviorSubject([]);
     players = new BehaviorSubject([]);
     decorations = new BehaviorSubject([]);
