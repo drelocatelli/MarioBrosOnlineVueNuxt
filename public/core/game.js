@@ -7,6 +7,20 @@ class Game {
     platforms = new BehaviorSubject([]);
     players = new BehaviorSubject([]);
 
+    addPlayers(players) {
+        this.players.next([
+            ...this.players.value,
+            ...players
+        ]);
+    }
+
+    addPlatforms(platforms) {
+        this.platforms.next([
+            ...this.platforms.value,
+            ...platforms
+        ]);
+    }
+
     run() {
         this.players.subscribe((players) => {
             for (const player of players) {

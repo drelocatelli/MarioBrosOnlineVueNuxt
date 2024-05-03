@@ -1,5 +1,5 @@
 
-<script lang="ts" setup>
+<script setup>
 useHead({
     title: 'Super Mario Bros Online',
     script: [
@@ -55,10 +55,6 @@ body {
 
 .platform {
   position: absolute;
-}
-
-.player {
-  clip-path: circle();
 }
 
 </style>
