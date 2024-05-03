@@ -96,26 +96,15 @@ class Player {
         // Check collision with platforms
         platforms.subscribe((platforms) => {
             for (let platform of platforms) {
-            const elementRect = this.element.getBoundingClientRect();
+            const playerRect = this.element.getBoundingClientRect();
             const platformRect = platform.element.getBoundingClientRect();
             const platformHeight = parseInt(platform.height); // Convert platform height to a number
           
-            //   if (
-            //     elementRect.x < platformRect.x + platformRect.width &&
-            //     elementRect.x + elementRect.width > platformRect.x &&
-            //     elementRect.y + elementRect.height > platformRect.y &&
-            //     elementRect.y < platformRect.y + platformHeight // Check if player's top is below platform's bottom
-            //   ) {
-            //     this.jumping = false;
-            //     this.yVelocity = 0;
-            //     elementRect.y = platformRect.y - this.height;
-            //   }
-
-                if (
-                    elementRect.x < platformRect.x + platformRect.width &&
-                    elementRect.x + elementRect.width > platformRect.x &&
-                    elementRect.y + elementRect.height > platformRect.y &&
-                    elementRect.y < platformRect.y + platformHeight // Check if player's top is below platform's bottom
+            if (
+                    playerRect.x < platformRect.x + platformRect.width &&
+                    playerRect.x + playerRect.width > platformRect.x &&
+                    playerRect.y + playerRect.height > platformRect.y &&
+                    playerRect.y < platformRect.y + platformHeight // Check if player's top is below platform's bottom
                 ) {
                     this.jumping = false;
                     this.yVelocity = 0;

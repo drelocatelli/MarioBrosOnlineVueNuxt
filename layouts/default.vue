@@ -41,10 +41,11 @@ useHead({
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #game {
-    position: relative;
+    position: fixed;
     width: 400px;
     height: 300px;
     background-color: lightblue;
