@@ -12,6 +12,10 @@ useHead({
       body: true
     },
     {
+      src: `core/person.js`,
+      body: true
+    },
+    {
       src: `core/sprite_css.js`,
       body: true
     },
@@ -60,8 +64,6 @@ body {
     width: 100%;
     transform: scaleY(-1);
     height: 100vh;
-  }
-  
-
+}
 
 </style>

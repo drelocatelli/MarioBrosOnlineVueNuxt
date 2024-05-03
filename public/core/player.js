@@ -2,7 +2,7 @@ class Player {
 
     isColliding = false;
     
-    constructor({ x, y, width, height, background, css, game }) {
+    constructor({ x, y, width, height, background, css, id, game }) {
         this.x = x;
         this.width = width ?? 50;
         this.height = height ?? 50;
@@ -13,6 +13,7 @@ class Player {
         this.background = background ?? 'red';
         this.game = game ?? [];
         this.css = css;
+        this.id = id;
         this.createElement(x, y, width, height, background);
         this.makePlayerCommands();
         this.update();
@@ -21,6 +22,7 @@ class Player {
     createElement() {
         this.element = document.createElement('div');
         this.element.classList.add('player');
+        this.element.style.id = this.id;
         this.element.style.width = this.width + 'px';
         this.element.style.height = this.height + 'px';
         this.element.style.background = this.background;
