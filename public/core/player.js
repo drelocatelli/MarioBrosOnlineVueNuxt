@@ -19,6 +19,17 @@ class Player {
         this.update();
     }
 
+    mergeCSS() {
+        const existingCssText = this.element.getAttribute("style") || "";
+        const mergedCssText = SpriteCss.mergeCssText(existingCssText, this.css);
+        this.element.setAttribute("style", mergedCssText);
+    }
+
+
+    changeCss(css) {
+        this.css = css;
+    }
+
     createElement() {
         this.element = document.createElement('div');
         this.element.classList.add('player');
@@ -29,10 +40,8 @@ class Player {
         this.element.style.position = 'absolute';
         this.element.style.bottom = this.y + 'px';
         this.element.style.left = this.x ?? 0;
-        if (this.css) {
-            const existingCssText = this.element.getAttribute("style") || "";
-            const mergedCssText = SpriteCss.mergeCssText(existingCssText, this.css);
-            this.element.setAttribute("style", mergedCssText);
+        if(this.css) {
+            this.mergeCSS();
         }
         Game.element.appendChild(this.element);
     }
@@ -48,15 +57,30 @@ class Player {
         document.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowLeft') {
                 vm.moveLeft();
+                vm.css = Person.running('left');
+                vm.mergeCSS();
+
             } else if (event.key === 'ArrowRight') {
                 vm.moveRight();
+                vm.css = Person.running('right');
+                vm.mergeCSS();
             } else if (event.key === 'ArrowUp') {
+                vm.css = Person.jumping('right');
+                vm.mergeCSS();
                 vm.jump();
+                setTimeout(() => {
+                    vm.css = Person.initial();
+                    vm.mergeCSS();
+
+                }, 500)
+
             }
         });
 
         document.addEventListener('keyup', function (event) {
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                vm.css = Person.initial();
+                vm.mergeCSS();
                 vm.stopMoving();
             }
         });
@@ -116,7 +140,9 @@ class Player {
                 ) {
                     this.jumping = false;
                     this.yVelocity = 0;
-                    this.y = platformRect.y - this.height;
+                    //change it for player size
+                    const playerSizeDist = 12;
+                    this.y = platformRect.y - this.height - playerSizeDist;
                 }
             }
         });

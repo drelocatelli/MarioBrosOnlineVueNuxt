@@ -31,6 +31,7 @@ class Game {
     }
 
     run() {
+        // return
         Game.currentGame.next(this);
         this.players.subscribe((players) => {
             for (const player of players) {
