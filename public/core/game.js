@@ -6,6 +6,14 @@ class Game {
     static element = document.getElementById('game');
     platforms = new BehaviorSubject([]);
     players = new BehaviorSubject([]);
+    decorations = new BehaviorSubject([]);
+
+    addDecorations(decoration) {
+        this.decorations.next([
+            ...this.decorations.value,
+            ...decoration
+        ]);
+    }
 
     addPlayers(players) {
         this.players.next([

@@ -12,6 +12,10 @@ useHead({
       body: true
     },
     {
+      src: `core/sprite_css.js`,
+      body: true
+    },
+    {
       src: `core/game.js`,
       body: true
     },
@@ -23,16 +27,22 @@ useHead({
       src: `core/player.js`,
       body: true
     },
+    {
+      src: `core/decoration.js`,
+      body: true
+    },
+    
   ],
 });
-
 
 </script>
 
 <template>
     <div>
         <div id="game">
-            <slot/>
+          <div id="content">
+              <slot/>
+          </div>
         </div>
     </div>
 </template>
@@ -46,16 +56,12 @@ body {
 
 #game {
     position: fixed;
-    width: 400px;
-    height: 300px;
     background-color: lightblue;
     width: 100%;
-    height: 100vh;
     transform: scaleY(-1);
-}
+    height: 100vh;
+  }
+  
 
-.platform {
-  position: absolute;
-}
 
 </style>

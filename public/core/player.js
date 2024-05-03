@@ -2,7 +2,7 @@ class Player {
 
     isColliding = false;
     
-    constructor({ x, y, width, height, background, game }) {
+    constructor({ x, y, width, height, background, css, game }) {
         this.x = x;
         this.width = width ?? 50;
         this.height = height ?? 50;
@@ -12,6 +12,7 @@ class Player {
         this.yVelocity = 0;
         this.background = background ?? 'red';
         this.game = game ?? [];
+        this.css = css;
         this.createElement(x, y, width, height, background);
         this.makePlayerCommands();
         this.update();
@@ -26,6 +27,11 @@ class Player {
         this.element.style.position = 'absolute';
         this.element.style.bottom = this.y + 'px';
         this.element.style.left = this.x ?? 0;
+        if (this.css) {
+            const existingCssText = this.element.getAttribute("style") || "";
+            const mergedCssText = SpriteCss.mergeCssText(existingCssText, this.css);
+            this.element.setAttribute("style", mergedCssText);
+        }
         Game.element.appendChild(this.element);
     }
 
