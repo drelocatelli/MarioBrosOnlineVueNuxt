@@ -10,7 +10,9 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   io.bind(engine);
 
   io.on("connection", (socket) => {
-    socket.emit('login', socket.id);
+    let users = io.engine.clientsCount;
+
+    io.sockets.emit('login', {users, id: socket.id});
   });
 
   nitroApp.router.use("/socket.io/", defineEventHandler({

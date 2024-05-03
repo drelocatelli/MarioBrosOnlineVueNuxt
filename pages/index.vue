@@ -14,9 +14,10 @@ onMounted(() => {
     ]);
 
     Core.listen((socket) => {
-        socket.on('login', (id) => {
+        socket.on('login', (event) => {
+            console.log(event)
             game.addPlayers([
-                new Player({id, x: 50, y: 200, background: 'url("/assets/mario.png") no-repeat', css: Person.initial(), game}),
+                new Player({id: event.id, x: 50, y: 200, background: 'url("/assets/mario.png") no-repeat', css: Person.initial(), game}),
             ]);
         });
     })
