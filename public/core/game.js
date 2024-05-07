@@ -28,7 +28,9 @@ class Game {
     removePlayer(playerId) {
         const currentPlayers = this.players.value.filter((player) => player.id != playerId);
         this.players.next(currentPlayers);
-        const playerEl = document.querySelector(`.player#${playerId}`).remove();
+
+        // remove player on dom
+        document.querySelector(`.player#${playerId}`).remove();
     }
 
     addPlatforms(platforms) {
