@@ -10,7 +10,7 @@ class Game {
     platforms = new BehaviorSubject([]);
     players = new BehaviorSubject([]);
     decorations = new BehaviorSubject([]);
- 
+     
     addDecorations(decoration) {
         this.decorations.next([
             ...this.decorations.value,

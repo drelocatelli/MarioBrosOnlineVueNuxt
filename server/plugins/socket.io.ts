@@ -9,10 +9,21 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 
   io.bind(engine);
 
-  io.on("connection", (socket) => {
+  io.on("connection", (socket: any) => {
     let users = io.engine.clientsCount;
 
+    // emit
     io.sockets.emit('login', {users, id: socket.id});
+
+    // listen
+    socket.on('keydown', (event: {player: string, key: string}) => {
+      io.sockets.emit('keydownPressed', event);
+    });
+
+    socket.on('keyup', (event: {player: string, key: string}) => {
+      io.sockets.emit('keyupPressed', event);
+    });
+    
   });
 
   nitroApp.router.use("/socket.io/", defineEventHandler({

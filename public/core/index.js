@@ -9,4 +9,10 @@ class Core {
             }
         })
     }
+
+    static send(key, value) {
+        this.listen((socket) => {
+            socket.emit(key, value);
+        });
+    }
 }

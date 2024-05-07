@@ -15,7 +15,7 @@ onMounted(() => {
 
     Core.listen((socket) => {
         socket.on('login', (event) => {
-            console.log(event)
+            console.log(`%c Entrou no game: ${event.id}`, "background:green; color:white;")
             game.addPlayers([
                 new Player({id: event.id, x: 50, y: 200, background: 'url("/assets/mario.png") no-repeat', css: Person.initial(), game}),
             ]);

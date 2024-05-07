@@ -15,7 +15,8 @@ class Player {
         this.css = css;
         this.id = id;
         this.createElement(x, y, width, height, background);
-        this.makePlayerCommands();
+        this.listenCommands();
+        this.shareCommands();
         this.update();
     }
 
@@ -52,37 +53,54 @@ class Player {
         this.updatePosition();
     }
 
-    makePlayerCommands() {
-        const vm = this;
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'ArrowLeft') {
-                vm.moveLeft();
-                vm.css = Person.running('left');
-                vm.mergeCSS();
+    listenCommands() {
+        Core.listen((socket) => {
+            const vm = this;
+            socket.on('keydownPressed', (event) => {
+                console.log(`%c Apertou uma tecla (${event.key}): ${event.player}`, "background:blue; color:white;")
+                if(event.player === vm.id) {
+                    if (event.key === 'ArrowLeft') {
+                        Movimentation.left(vm);
+                        // vm.moveLeft(event.player);
+                        vm.css = Person.running('left');
+                        vm.mergeCSS();
+                    } else if (event.key === 'ArrowRight') {
+                        // vm.moveRight(event.player);
+                        Movimentation.right(vm);
+                        vm.css = Person.running('right');
+                        vm.mergeCSS();
+                    } else if (event.key === 'ArrowUp') {
+                        vm.css = Person.jumping('right');
+                        vm.mergeCSS();
+                        // vm.jump(event.player);
+                        Movimentation.jump(vm);
+                        setTimeout(() => {
+                            vm.css = Person.initial();
+                            vm.mergeCSS();
+        
+                        }, 500)
+                    }
+                }
+            })
 
-            } else if (event.key === 'ArrowRight') {
-                vm.moveRight();
-                vm.css = Person.running('right');
-                vm.mergeCSS();
-            } else if (event.key === 'ArrowUp') {
-                vm.css = Person.jumping('right');
-                vm.mergeCSS();
-                vm.jump();
-                setTimeout(() => {
+            socket.on('keyupPressed', (event) => {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
                     vm.css = Person.initial();
                     vm.mergeCSS();
+                    Movimentation.stop(vm);
+                }
+            })
+        });
+    }
 
-                }, 500)
-
-            }
+    shareCommands() {
+        const vm = this;
+        document.addEventListener('keydown', function (event) {
+            Core.send('keydown', {player: vm.id, key: event.key});
         });
 
         document.addEventListener('keyup', function (event) {
-            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                vm.css = Person.initial();
-                vm.mergeCSS();
-                vm.stopMoving();
-            }
+            Core.send('keyup', {player: vm.id, key: event.key});
         });
     }
 
@@ -164,30 +182,5 @@ class Player {
         this.element.style.bottom = this.y + 'px';
     }
 
-    moveLeft() {
-        this.xVelocity = -5;
-    }
-
-    moveRight() {
-        this.xVelocity = 5;
-    }
-
-    stopMoving() {
-        this.xVelocity = 0;
-    }
-
-    jump() {
-        if (!this.jumping) {
-            this.yVelocity = -10;
-            this.jumping = true;
-        }
-    }
-
-    setPosition(x, y) {
-        this.x = x;
-        this.y = y;
-        this.element.style.left = this.x + 'px';
-        this.element.style.bottom = this.y + 'px';
-        this.element.style.bottom = Game.area.height - this.y - this.height + 'px';
-    }
+ 
 }

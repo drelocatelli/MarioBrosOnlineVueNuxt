@@ -48,6 +48,10 @@ useHead({
       body: true
     },
     {
+      src: `core/movimentation.js`,
+      body: true
+    },
+    {
       src: `core/player.js`,
       body: true
     },
