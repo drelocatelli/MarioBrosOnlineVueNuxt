@@ -8,8 +8,8 @@ onMounted(() => {
     ]);
 
     game.addDecorations([
-        new Decoration({x: 15, y: 53, width: '48px', height: '35px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-y: -198px; background-size: 570px;', game}),
-        new Decoration({x: 35, y: 53, width: '48px', height: '35px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-x: -90px; background-position-y: -198px; background-size: 570px;', game}),
+        new Decoration({x: 15, y: 53, width: '48px', height: '34px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-y: -574px; background-size: 570px;', game}),
+        new Decoration({x: 35, y: 53, width: '48px', height: '34px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-x: -614px; background-position-y: -574px; background-size: 570px;', game}),
     ]);
 
     Core.listen((socket) => {
@@ -38,8 +38,8 @@ onMounted(() => {
 <style lang="scss">
 #game {
     background: url(/assets/background1.png) repeat-x;
-    background-color: #48ace8 !important;
-    background-position-y: -50px;
+    background-color: #8CC0B8 !important;
+    background-position-y: 0;
     background-size: 620px;
     image-rendering: pixelated;
 }

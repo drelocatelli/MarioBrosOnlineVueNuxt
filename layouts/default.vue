@@ -89,7 +89,7 @@ body {
     position: fixed;
     background-color: lightblue;
     width: 100%;
-    transform: scaleY(-1);
+    /* transform: scaleY(-1); */
     height: 100vh;
 }
 

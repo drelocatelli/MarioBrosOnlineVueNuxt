@@ -9,21 +9,21 @@ class Person {
         
         return `
             ${this.basic}
-            background-position: -474px -21px;
+            background-position: -474px 0px;
             `;
     }
 
     static running(position) {
         return `
             ${this.basic}
-            background-position: ${position == 'right' ?  '-531px -21px' : '-362px -21px' };
+            background-position: ${position == 'right' ?  '-531px 0' : '-361px 0' };
         `;
     }
 
     static jumping(position) {
         return `
             ${this.basic}
-            background-position: ${position == 'right' ?  '-594px -21px' : '-299px -21px' };
+            background-position: ${position == 'right' ?  '-301px 0' : '-574px 0' };
         `;
     }
     

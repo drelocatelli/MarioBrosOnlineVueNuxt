@@ -29,7 +29,7 @@ class Platform {
     draw() {
         this.element.style.position = 'absolute';
         this.element.style.left = this.x + 'px';
-        this.element.style.top = this.y + 'px';
+        this.element.style.bottom = this.y + 'px';
         this.element.style.width = this.width;
         this.element.style.height = this.height;
         this.element.style.background = this.background;
