@@ -3,7 +3,6 @@
 onMounted(() => {
     const game = new Game();
 
-
     game.addPlatforms([
         new Platform({x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
     ]);
@@ -19,6 +18,10 @@ onMounted(() => {
             game.addPlayers([
                 new Player({id: event.id, x: 50, y: 200, background: 'url("/assets/mario.png") no-repeat', css: Person.initial(), game}),
             ]);
+        });
+
+        socket.on('logout', (playerId) => {
+            game.removePlayer(playerId);
         });
     })
 

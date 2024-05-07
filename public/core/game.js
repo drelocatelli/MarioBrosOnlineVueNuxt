@@ -10,7 +10,7 @@ class Game {
     platforms = new BehaviorSubject([]);
     players = new BehaviorSubject([]);
     decorations = new BehaviorSubject([]);
-     
+
     addDecorations(decoration) {
         this.decorations.next([
             ...this.decorations.value,
@@ -23,6 +23,12 @@ class Game {
             ...this.players.value,
             ...players
         ]);
+    }
+
+    removePlayer(playerId) {
+        const currentPlayers = this.players.value.filter((player) => player.id != playerId);
+        this.players.next(currentPlayers);
+        const playerEl = document.querySelector(`.player#${playerId}`).remove();
     }
 
     addPlatforms(platforms) {

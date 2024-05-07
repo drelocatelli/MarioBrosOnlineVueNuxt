@@ -15,7 +15,7 @@ class Player {
         this.css = css;
         this.id = id;
         this.createElement(x, y, width, height, background);
-        this.listenCommands();
+        this.listen();
         this.shareCommands();
         this.update();
     }
@@ -53,7 +53,9 @@ class Player {
         this.updatePosition();
     }
 
-    listenCommands() {
+    listen() {
+
+        // listen player commands from server
         Core.listen((socket) => {
             const vm = this;
             socket.on('keydownPressed', (event) => {

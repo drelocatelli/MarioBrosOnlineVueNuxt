@@ -9,9 +9,7 @@ class Movimentation {
     }
 
     static stop(player) {
-        console.log('stop')
         player.xVelocity = 0;
-        console.log(player);
     }
 
     static jump(player) {

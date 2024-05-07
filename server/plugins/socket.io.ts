@@ -14,8 +14,12 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 
     // emit
     io.sockets.emit('login', {users, id: socket.id});
-
+    
     // listen
+    socket.on('disconnect', (event: any) => {
+      io.sockets.emit('logout', socket.id);
+    })
+    
     socket.on('keydown', (event: {player: string, key: string}) => {
       io.sockets.emit('keydownPressed', event);
     });
