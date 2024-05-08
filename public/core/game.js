@@ -30,7 +30,7 @@ class Game {
         this.players.next(currentPlayers);
 
         // remove player on dom
-        document.querySelector(`.player#${playerId}`).remove();
+        // document.querySelector(`.player#${playerId}`).remove();
     }
 
     static addPlatforms(platforms) {

@@ -40,6 +40,12 @@ class Player {
         this.element.style.position = 'absolute';
         this.element.style.top = this.y + 'px';
         this.element.style.left = this.x ?? 0;
+
+        this.playerName = document.createElement('span');
+        this.playerName.id = this.id;
+        this.playerName.classList.add('user_name');
+        document.body.appendChild(this.playerName);
+
         if (this.css) {
             this.mergeCSS();
         }
@@ -49,55 +55,69 @@ class Player {
     update() {
         this.applyGravity();
         this.checkCollision();
+        this.updatePosition();
     }
 
     listen() {
         // listen player commands from server
         Core.listen((socket) => {
             const vm = this;
-            
-            socket.on('player_move', function (event) {
-                if(vm.element.id === event.player) {
-                    vm.updatePosition(vm, event);
-                    if(event.type == 'keyup') {
-                        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                            vm.css = Person.initial();
-                            vm.mergeCSS();
-                            Movimentation.stop(vm);
-                        }
-                    } else if(event.type == 'keydown') {
-                        new Movimentation(vm, event);
-                    }
-                }
+
+            socket.on('player_movement', function (event) {
+                vm.basicMovimentation(vm, event);
             });
         });
     }
 
-    updatePosition(vm, event) {
-        const consoleStyle = vm.id == event.player ? 'background:blue; color:white;' : 'background:red; color:white;';
-        console.log(`%c Apertou uma tecla (${event.key}): ${event.player == vm.id ? '(Você)' : event.player}`, consoleStyle);
+    basicMovimentation(vm, event) {
+        if (vm.element.id === event.player) {
+            if (event.type == 'keyup') {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    vm.css = Person.initial();
+                    vm.mergeCSS();
+                    Movimentation.stop(vm);
+                }
+            } else if (event.type == 'keydown') {
+                new Movimentation(vm, event);
+            }
+        }
+    }
 
-        vm.x += vm.xVelocity;
-        vm.y += vm.yVelocity;
-        vm.yVelocity += vm.gravity;
+    updatePosition() {
+        this.x += this.xVelocity;
+        this.y += this.yVelocity;
+        this.yVelocity += this.gravity;
 
-        vm.element.style.left = vm.x + 'px';
-        vm.element.style.top = vm.y + 'px';
+        this.element.style.left = this.x + 'px';
+        this.element.style.top = this.y + 'px';
+
+        // set player name position on screen
+        this.playerName.style.position = 'absolute';
+        this.playerName.style.top = this.y - 30 + 'px';
+        this.playerName.style.left = this.x + 'px';
+        this.playerName.style.userSelect = 'none';
+        this.playerName.style.fontWeight = 'bold';
+        this.playerName.style.textTransform = 'uppercase';
+        this.playerName.innerText = this.id.slice(0, 6);
     }
 
     shareCommands() {
         const vm = this;
         document.addEventListener('keydown', function (event) {
-            Core.send('keydown', { player: vm.id, key: event.key, type: 'keydown' });
+            const props = { player: vm.id, key: event.key, type: 'keydown' };
+            Core.send('keydown', props);
+            vm.basicMovimentation(vm, props);
         });
 
         document.addEventListener('keyup', function (event) {
-            Core.send('keyup', { player: vm.id, key: event.key, type: 'keyup' });
+            const props = { player: vm.id, key: event.key, type: 'keyup' };
+            Core.send('keyup', props);
+            vm.basicMovimentation(vm, props);
         });
     }
 
     applyGravity() {
-        const {platforms} = this.game.getValue();
+        const { platforms } = this.game.getValue();
 
         const gravity = this.gravity;
         // Check if the player is colliding with a platform
@@ -128,7 +148,7 @@ class Player {
     }
 
     checkCollision() {
-        const {platforms} = this.game.getValue();
+        const { platforms } = this.game.getValue();
 
         // Check if the player is above the ceiling
         if (this.y < 0) {

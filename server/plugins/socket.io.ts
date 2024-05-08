@@ -14,6 +14,7 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 
     // emit
     io.sockets.emit('login', {users, id: socket.id});
+    io.sockets.emit('new_connection', {usersCount: users, id: socket.id});
     
     // listen
     socket.on('disconnect', (event: any) => {
@@ -22,12 +23,12 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     
     socket.on('keydown', (event: {key: string}) => {
       (event as any)['player'] = socket.id;
-      io.sockets.emit('player_move', event);
+      socket.broadcast.emit('player_movement', event);
     });
 
     socket.on('keyup', (event: {key: string}) => {
       (event as any)['player'] = socket.id;
-      io.sockets.emit('player_move', event);
+      socket.broadcast.emit('player_movement', event);
     });
 
   });
