@@ -55,7 +55,6 @@ class Player {
     update() {
         this.applyGravity();
         this.checkCollision();
-        this.updatePosition();
     }
 
     listen() {
@@ -81,6 +80,7 @@ class Player {
                 new Movimentation(vm, event);
             }
         }
+
     }
 
     updatePosition() {

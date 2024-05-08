@@ -46,6 +46,7 @@ class Game {
         this.players.subscribe((players) => {
             for (const player of players) {
                 player.update();
+                player.updatePosition();
             }
         })
         this.platforms.subscribe((platforms) => {
