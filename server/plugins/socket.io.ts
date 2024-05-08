@@ -20,14 +20,17 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
       io.sockets.emit('logout', socket.id);
     })
     
-    socket.on('keydown', (event: {player: string, key: string}) => {
-      io.sockets.emit('keydownPressed', event);
+    socket.on('keydown', (event: {key: string}) => {
+      (event as any)['player'] = socket.id;
+      io.sockets.emit('player_move', event);
     });
 
-    socket.on('keyup', (event: {player: string, key: string}) => {
-      io.sockets.emit('keyupPressed', event);
+    socket.on('keyup', (event: {key: string}) => {
+      (event as any)['player'] = socket.id;
+
+      io.sockets.emit('player_move', event);
     });
-    
+
   });
 
   nitroApp.router.use("/socket.io/", defineEventHandler({
