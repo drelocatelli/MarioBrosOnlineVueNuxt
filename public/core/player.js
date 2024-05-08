@@ -3,6 +3,7 @@ class Player {
     isColliding = false;
     
     constructor({ x, y, width, height, background, css, id, game }) {
+        this.gravity = 0.2; 
         this.x = x;
         this.width = width ?? 50;
         this.height = height ?? 50;
@@ -39,7 +40,7 @@ class Player {
         this.element.style.height = this.height + 'px';
         this.element.style.background = this.background;
         this.element.style.position = 'absolute';
-        this.element.style.bottom = this.y + 'px';
+        this.element.style.top = this.y + 'px';
         this.element.style.left = this.x ?? 0;
         if(this.css) {
             this.mergeCSS();
@@ -79,7 +80,6 @@ class Player {
                         setTimeout(() => {
                             vm.css = Person.initial();
                             vm.mergeCSS();
-        
                         }, 500)
                     }
                 }
@@ -108,7 +108,7 @@ class Player {
 
     applyGravity() {
         const {platforms} = this.game;
-        const gravity = 0.3;
+        const gravity = this.gravity;
         // Check if the player is colliding with a platform
         platforms.subscribe((platforms) => {
             platforms.forEach(platform => {
@@ -118,7 +118,7 @@ class Player {
                   this.y + this.height > platform.y &&
                   this.y < platform.y + platform.height
                 ) {
-                  this.isColliding.next(true);
+                  this.isColliding = (true);
                   return; // Para a execução do loop forEach se houver colisão
                 }
               });
@@ -127,7 +127,7 @@ class Player {
         // Check if the player is colliding with the bottom of the screen
         const screenHeight = Game.area.height;
         if (this.y + this.height >= screenHeight) {
-            this.isColliding.next(true);
+            this.isColliding = (true);
         }
 
         // Apply gravity only if there is no collision
@@ -180,8 +180,10 @@ class Player {
     updatePosition() {
         this.x += this.xVelocity;
         this.y += this.yVelocity;
+        this.yVelocity += this.gravity;
+
         this.element.style.left = this.x + 'px';
-        this.element.style.bottom = this.y + 'px';
+        this.element.style.top = this.y + 'px';
     }
 
  
