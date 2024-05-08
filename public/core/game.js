@@ -1,48 +1,47 @@
-
-const { BehaviorSubject } = rxjs;
+import {ref} from 'vue';
 
 class Game {
     static area = document.querySelector('#game').getBoundingClientRect();
     static element = document.getElementById('game');
-    static currentGame = new BehaviorSubject(undefined);
-    static socket = new BehaviorSubject(undefined);
+    static currentGame = ref(undefined);
+    static socket = ref(undefined);
     
-    platforms = new BehaviorSubject([]);
-    players = new BehaviorSubject([]);
-    decorations = new BehaviorSubject([]);
+    platforms = ref([]);
+    players = ref([]);
+    decorations = ref([]);
 
     addDecorations(decoration) {
-        this.decorations.next([
+        this.decorations.value = [
             ...this.decorations.value,
             ...decoration
-        ]);
+        ];
     }
 
     addPlayers(players) {
-        this.players.next([
+        this.players.value = [
             ...this.players.value,
             ...players
-        ]);
+        ];
     }
 
     removePlayer(playerId) {
         const currentPlayers = this.players.value.filter((player) => player.id != playerId);
-        this.players.next(currentPlayers);
+        this.players.value = currentPlayers;
 
         // remove player on dom
         document.querySelector(`.player#${playerId}`).remove();
     }
 
     addPlatforms(platforms) {
-        this.platforms.next([
+        this.platforms.value = [
             ...this.platforms.value,
             ...platforms
-        ]);
+        ];
     }
 
     run() {
         // return
-        Game.currentGame.next(this);
+        Game.currentGame.value = this;
         this.players.subscribe((players) => {
             for (const player of players) {
                 player.update();

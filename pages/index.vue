@@ -1,5 +1,4 @@
 <script setup>
-    
 onMounted(() => {
     const game = new Game();
 

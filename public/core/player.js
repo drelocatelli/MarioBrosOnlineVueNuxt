@@ -118,7 +118,7 @@ class Player {
                   this.y + this.height > platform.y &&
                   this.y < platform.y + platform.height
                 ) {
-                  this.isColliding.next(true);
+                  this.isColliding = true;
                   return; // Para a execução do loop forEach se houver colisão
                 }
               });
@@ -127,7 +127,7 @@ class Player {
         // Check if the player is colliding with the bottom of the screen
         const screenHeight = Game.area.height;
         if (this.y + this.height >= screenHeight) {
-            this.isColliding.next(true);
+            this.isColliding = true;
         }
 
         // Apply gravity only if there is no collision
