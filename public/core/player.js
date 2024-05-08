@@ -2,7 +2,7 @@ class Player {
     isColliding = false;
 
     constructor({ x, y, width, height, background, css, id, game }) {
-        this.gravity = 0.2;
+        this.gravity = 0.3;
         this.x = x;
         this.width = width ?? 50;
         this.height = height ?? 50;
@@ -11,7 +11,7 @@ class Player {
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.background = background ?? 'red';
-        this.game = game ?? [];
+        this.game = Game.currentGame;
         this.css = css;
         this.id = id;
         this.createElement(x, y, width, height, background);
@@ -57,18 +57,17 @@ class Player {
             const vm = this;
             
             socket.on('player_move', function (event) {
-                console.log(event)
-                if (event.type === 'keyup') {
-                    if(event.key === 'ArrowUp') {
+                if(vm.element.id === event.player) {
+                    vm.updatePosition(vm, event);
+                    if(event.type == 'keyup') {
                         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
                             vm.css = Person.initial();
                             vm.mergeCSS();
                             Movimentation.stop(vm);
                         }
-                    } else {
+                    } else if(event.type == 'keydown') {
                         new Movimentation(vm, event);
                     }
-                    vm.updatePosition(vm, event);
                 }
             });
         });
@@ -98,7 +97,8 @@ class Player {
     }
 
     applyGravity() {
-        const { platforms } = this.game;
+        const {platforms} = this.game.getValue();
+
         const gravity = this.gravity;
         // Check if the player is colliding with a platform
         platforms.subscribe((platforms) => {
@@ -128,7 +128,7 @@ class Player {
     }
 
     checkCollision() {
-        const { platforms } = this.game;
+        const {platforms} = this.game.getValue();
 
         // Check if the player is above the ceiling
         if (this.y < 0) {

@@ -7,25 +7,25 @@ class Game {
     static currentGame = new BehaviorSubject(undefined);
     static socket = new BehaviorSubject(undefined);
     
-    platforms = new BehaviorSubject([]);
-    players = new BehaviorSubject([]);
-    decorations = new BehaviorSubject([]);
+    static platforms = new BehaviorSubject([]);
+    static players = new BehaviorSubject([]);
+    static decorations = new BehaviorSubject([]);
 
-    addDecorations(decoration) {
+    static addDecorations(decoration) {
         this.decorations.next([
             ...this.decorations.value,
             ...decoration
         ]);
     }
 
-    addPlayers(players) {
+    static addPlayers(players) {
         this.players.next([
             ...this.players.value,
             ...players
         ]);
     }
 
-    removePlayer(playerId) {
+    static removePlayer(playerId) {
         const currentPlayers = this.players.value.filter((player) => player.id != playerId);
         this.players.next(currentPlayers);
 
@@ -33,14 +33,14 @@ class Game {
         document.querySelector(`.player#${playerId}`).remove();
     }
 
-    addPlatforms(platforms) {
+    static addPlatforms(platforms) {
         this.platforms.next([
             ...this.platforms.value,
             ...platforms
         ]);
     }
 
-    run() {
+    static run() {
         // return
         Game.currentGame.next(this);
         this.players.subscribe((players) => {

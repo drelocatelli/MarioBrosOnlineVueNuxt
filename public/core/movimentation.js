@@ -1,17 +1,16 @@
 class Movimentation {
-
     constructor(vm, event) {
-        switch(event.key) {
+        switch (event.key) {
             case 'ArrowLeft':
                 Movimentation.left(vm);
                 vm.css = Person.running('left');
                 vm.mergeCSS();
-            break;
+                break;
             case 'ArrowRight':
                 Movimentation.right(vm);
                 vm.css = Person.running('right');
                 vm.mergeCSS();
-            break;
+                break;
             case 'ArrowUp':
                 vm.css = Person.jumping('right');
                 vm.mergeCSS();
@@ -20,15 +19,10 @@ class Movimentation {
                     vm.css = Person.initial();
                     vm.mergeCSS();
                 }, 500);
-            break;
-            case 'ArrowLeft' || 'ArrowRight':
-                vm.css = Person.initial();
-                vm.mergeCSS();
-                Movimentation.stop(vm);
-            break;
+                break;
         }
     }
-    
+
     static left(player) {
         player.xVelocity = -5;
     }

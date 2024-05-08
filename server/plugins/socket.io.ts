@@ -27,7 +27,6 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 
     socket.on('keyup', (event: {key: string}) => {
       (event as any)['player'] = socket.id;
-
       io.sockets.emit('player_move', event);
     });
 
