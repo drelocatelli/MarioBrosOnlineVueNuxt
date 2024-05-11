@@ -175,7 +175,6 @@ class Player {
             if(platform.id !== 'main') {
                 if(Collision.isColliding(platformRect, playerRect)) {
                     if(!Collision.isAbove(playerRect, platformRect)) {
-                        console.log(true)
                         this.stopJumpAndSetVelocity();
                     }
                 }
