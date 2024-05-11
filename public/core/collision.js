@@ -9,4 +9,8 @@ class Collision {
         // check width and left position
         rect1.width + rect1.left + 50 >= rect2.width + rect2.left
     }
+
+    static hasTopCollision(rect1, rect2) {
+        return rect1.top < rect2.bottom && rect1.bottom > rect2.bottom;
+    }
 }
