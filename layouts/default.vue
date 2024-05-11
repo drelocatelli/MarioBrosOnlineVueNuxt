@@ -9,7 +9,7 @@ const transport = ref('N/A');
 onMounted(() => {
     Game.socket.next(socket);
     Game.addPlatforms([
-        new Platform({x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game, id: 'main'}),
+        new Platform({ x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game, id: 'main' }),
     ]);
     new Watch();
 });
@@ -29,6 +29,10 @@ useHead({
     script: [
         {
             src: 'core/rxjs.umd.min.js',
+            body: true,
+        },
+        {
+            src: 'core/collision.js',
             body: true,
         },
         {
