@@ -8,6 +8,9 @@ const transport = ref('N/A');
 // ---------------------------------------------------- GLOBAL SOCKET
 onMounted(() => {
     Game.socket.next(socket);
+    Game.addPlatforms([
+        new Platform({x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game, id: 'main'}),
+    ]);
     new Watch();
 });
 

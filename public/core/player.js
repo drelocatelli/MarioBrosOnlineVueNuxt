@@ -74,10 +74,10 @@ class Player {
         this.y += this.yVelocity;
         this.yVelocity += this.gravity;
 
-        this.element.style.left = this.x + 'px';
         this.element.style.top = this.y + 'px';
+        this.element.style.left = this.x + 'px';
 
-        // set player name position on screen
+        // Set player name position on screen
         this.playerName.style.position = 'absolute';
         this.playerName.style.top = this.y - 30 + 'px';
         this.playerName.style.left = this.x + 'px';
@@ -85,6 +85,27 @@ class Player {
         this.playerName.style.fontWeight = 'bold';
         this.playerName.style.textTransform = 'uppercase';
         this.playerName.innerText = this.name ?? this.id.slice(0, 6);
+
+        this.responsivePos();
+    }
+
+    responsivePos() {
+        // Responsive position
+        const { innerWidth } = window;
+
+        if (innerWidth <= 768) {
+            // Small screens (up to 768px)
+            this.element.style.left = this.x - 110 + 'px';
+            this.playerName.style.left = this.x - 110 + 'px';
+        } else if (innerWidth <= 1366) {
+            // Medium screens (769px to 1366px)
+            this.element.style.left = this.x - 110 + 'px';
+            this.playerName.style.left = this.x - 110 + 'px';
+        } else {
+            // Large screens (1367px and above)
+            this.element.style.left = this.x + 'px';
+            this.playerName.style.left = this.x + 'px';
+        }
     }
 
     shareCommands() {
