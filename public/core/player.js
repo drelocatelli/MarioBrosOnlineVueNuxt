@@ -14,8 +14,8 @@ class Player {
         this.game = Game.currentGame;
         this.css = css;
         this.id = id;
+        this.name = undefined;
         this.createElement(x, y, width, height, background);
-        this.listen();
         this.shareCommands();
         this.update();
     }
@@ -57,30 +57,16 @@ class Player {
         this.checkCollision();
     }
 
-    listen() {
-        // listen player commands from server
-        Core.listen((socket) => {
-            const vm = this;
-
-            socket.on('player_movement', function (event) {
-                vm.basicMovimentation(vm, event);
-            });
-        });
-    }
-
-    basicMovimentation(vm, event) {
-        if (vm.element.id === event.player) {
-            if (event.type == 'keyup') {
-                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                    vm.css = Person.initial();
-                    vm.mergeCSS();
-                    Movimentation.stop(vm);
-                }
-            } else if (event.type == 'keydown') {
-                new Movimentation(vm, event);
+    listenMove(vm, event) {
+        if (event.type == 'keyup') {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                vm.css = Person.initial();
+                vm.mergeCSS();
+                Movimentation.stop(vm);
             }
+        } else if (event.type == 'keydown') {
+            new Movimentation(vm, event);
         }
-
     }
 
     updatePosition() {
@@ -98,7 +84,7 @@ class Player {
         this.playerName.style.userSelect = 'none';
         this.playerName.style.fontWeight = 'bold';
         this.playerName.style.textTransform = 'uppercase';
-        this.playerName.innerText = this.id.slice(0, 6);
+        this.playerName.innerText = this.name ?? this.id.slice(0, 6);
     }
 
     shareCommands() {
@@ -106,13 +92,11 @@ class Player {
         document.addEventListener('keydown', function (event) {
             const props = { player: vm.id, key: event.key, type: 'keydown' };
             Core.send('keydown', props);
-            vm.basicMovimentation(vm, props);
         });
 
         document.addEventListener('keyup', function (event) {
             const props = { player: vm.id, key: event.key, type: 'keyup' };
             Core.send('keyup', props);
-            vm.basicMovimentation(vm, props);
         });
     }
 

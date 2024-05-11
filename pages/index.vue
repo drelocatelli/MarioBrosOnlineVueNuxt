@@ -3,13 +3,14 @@
 onMounted(() => {
     Game.addPlatforms([
         new Platform({x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
+        new Platform({x: 0, y: 200, width: '20%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
     ]);
 
     Game.addDecorations([
         new Decoration({x: 15, y: 53, width: '48px', height: '34px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-y: -574px; background-size: 570px;', game}),
         new Decoration({x: 35, y: 53, width: '48px', height: '34px', background: 'url("/assets/basic.png") repeat-x', css: 'background-position-x: -614px; background-position-y: -574px; background-size: 570px;', game}),
     ]);
-
+    
     Game.run();
 
 });

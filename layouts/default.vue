@@ -1,5 +1,6 @@
 <script setup>
 import { socket } from '../socket.ts';
+import Watch from 'public/core/watch.js';
 
 const online = ref(false);
 const transport = ref('N/A');
@@ -7,23 +8,7 @@ const transport = ref('N/A');
 // ---------------------------------------------------- GLOBAL SOCKET
 onMounted(() => {
     Game.socket.next(socket);
-    Core.listen((socket) => {
-      // listen playes login
-        socket.on('login', (event) => {
-            console.log(`%c Entrou no game: ${event.id}`, 'background:green; color:white;');
-        });
-
-        socket.on('new_connection', (event) => {
-            for(let i = 1; i <= event.usersCount; i++) {
-                const newPlayer = new Player({ id: event.id, x: 50, y: 65, background: 'url("/assets/mario.png") no-repeat', css: Person.initial() });
-                Game.addPlayers([newPlayer]);
-            }
-        });
-
-        socket.on('logout', (playerId) => {
-            Game.removePlayer(playerId);
-        });
-    });
+    new Watch();
 });
 
 // ---------------------------------------------------- DISCONNECT
@@ -118,3 +103,4 @@ body {
     height: 100vh;
 }
 </style>
+~/public/core/watch.js

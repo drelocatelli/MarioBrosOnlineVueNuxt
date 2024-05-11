@@ -6,29 +6,43 @@ import { defineEventHandler } from "h3";
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   const engine = new Engine();
   const io = new Server();
-
+  let players: string[] = [];
+  
   io.bind(engine);
 
   io.on("connection", (socket: any) => {
+    // all sockets
     let users = io.engine.clientsCount;
 
+    // add player
+    players.push(socket.id);
+    const socketIp = socket.handshake.headers["x-forwarded-for"].split(",")[0];
+
     // emit
-    io.sockets.emit('login', {users, id: socket.id});
+    io.sockets.emit('login', {users, id: socket.id, address: socketIp});
     io.sockets.emit('new_connection', {usersCount: users, id: socket.id});
     
     // listen
     socket.on('disconnect', (event: any) => {
       io.sockets.emit('logout', socket.id);
+
+      // remove player
+      players = players.filter((player) => player !== socket.id);
     })
-    
+
+    socket.on('name_changed', (event : {name: string, id: string}) => {
+      io.sockets.emit('name_changed', event);
+    });
+
+    // watch keys
     socket.on('keydown', (event: {key: string}) => {
       (event as any)['player'] = socket.id;
-      socket.broadcast.emit('player_movement', event);
+      io.sockets.emit('player_movement', event);
     });
 
     socket.on('keyup', (event: {key: string}) => {
       (event as any)['player'] = socket.id;
-      socket.broadcast.emit('player_movement', event);
+      io.sockets.emit('player_movement', event);
     });
 
   });
