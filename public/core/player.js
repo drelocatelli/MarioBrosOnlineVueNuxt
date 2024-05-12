@@ -169,9 +169,11 @@ class Player {
             // prevent player jump to platform if he's bellow that
             if (platform.id !== 'main') {
                 if (Collision.isColliding(platformRect, playerRect)) {
-                    if (!Collision.isAbove(playerRect, platformRect) && Collision.hasTopCollision(playerRect, platformRect)) {
-                        this.jumping = false;
-                        this.yVelocity -= this.gravity;
+                    if (!Collision.isAbove(playerRect, platformRect)) {
+                        if(Collision.hasTopCollision(playerRect, platformRect)) {
+                            this.jumping = false;
+                            this.yVelocity -= this.gravity;
+                        }
                     }
                 }
             }

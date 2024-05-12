@@ -2,7 +2,7 @@
     
 onMounted(() => {
     Game.addPlatforms([
-        new Platform({x: 0, y: 150, width: '20%', height: '26px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
+        new Platform({x: 0, y: 180, width: '20%', height: '26px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
         new Platform({x: 450, y: 300, width: '20%', height: '26px', background: 'url("/assets/level1_floor.png") repeat-x', game}),
     ]);
 
