@@ -6,6 +6,7 @@ class Platform {
     background;
     game;
     element;
+    id;
 
     constructor({ x, y, width, height, background, css, game, id }) {
         this.x = parseFloat(x);
@@ -23,6 +24,7 @@ class Platform {
     createElement() {
         var platformEl = document.createElement('div');
         platformEl.classList.add('platform');
+        platformEl.id = this.id;
         this.element = platformEl;
         if (this.css) {
             const existingCssText = this.element.getAttribute('style') || '';

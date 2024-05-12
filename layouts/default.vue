@@ -108,6 +108,14 @@ body {
     width: 100%;
     /* transform: scaleY(-1); */
     height: 100vh;
+
+    & .platform#main {
+        z-index: 100;
+    }
+
+    & .player {
+        z-index: 500;
+    }
 }
+
 </style>
-~/public/core/watch.js
