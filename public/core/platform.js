@@ -34,6 +34,7 @@ class Platform {
         this.element.style.background = this.background;
         this.element.style.width = this.width;
         this.element.style.left = this.x + 'px';
+        this.element.style.zIndex = 500;
         this.element.setAttribute('class', this.classList);
     }
 }
