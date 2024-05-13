@@ -32,7 +32,7 @@ export default class Listenables {
             const players = Game.players.getValue();
             const player = players.find((player) => player.id == event.player);
             if(player) {
-                player.listenMove(player, event);
+                GameEvent.dispatchPlayerMovimentation(player, event);
             } else {
                 Game.addPlayers([new Player({ id: event.player, x: 50, y: 65, background: 'url("/assets/mario.png") no-repeat', css: Person.initial() })]);
             }

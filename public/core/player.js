@@ -1,8 +1,10 @@
+const movimentationEvent = new CustomEvent('player-movimentation');
+
 class Player {
     isColliding = false;
 
     constructor({ x, y, width, height, background, css, id, game }) {
-        this.gravity = 0.3;
+        this.gravity = 0.18;
         this.x = x;
         this.width = width ?? 50;
         this.height = height ?? 50;
@@ -15,8 +17,10 @@ class Player {
         this.css = css;
         this.id = id;
         this.name = undefined;
+        this.isMoving = false;
         this.createElement(x, y, width, height, background);
         this.shareCommands();
+        this.listenEvents();
         this.update();
     }
 
@@ -57,16 +61,28 @@ class Player {
         this.checkCollision();
     }
 
-    listenMove(vm, event) {
-        if (event.type == 'keyup') {
-            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                vm.css = Person.initial();
-                vm.mergeCSS();
-                Movimentation.stop(vm);
+    listenEvents() {
+        const vm = this;
+        vm.movimentationEvent();
+    }
+
+    movimentationEvent() {
+        document.addEventListener(GameEvent.playerMovimentation, (e) => {
+            const {detail} = e;
+            const {event} = detail;
+            const {player} = detail;
+            player.isMoving = true;
+
+            if (event.type == 'keyup') {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    player.css = Person.initial();
+                    player.mergeCSS();
+                    Movimentation.stop(player);
+                }
+            } else if (event.type == 'keydown') {
+                new Movimentation(player, event);
             }
-        } else if (event.type == 'keydown') {
-            new Movimentation(vm, event);
-        }
+        });
     }
 
     updatePosition() {

@@ -32,6 +32,10 @@ useHead({
             body: true,
         },
         {
+            src: 'core/event.js',
+            body: true,
+        },
+        {
             src: 'core/collision.js',
             body: true,
         },
@@ -114,6 +118,10 @@ body {
     }
 
     & .player {
+        z-index: 500;
+    }
+
+    & .platform {
         z-index: 500;
     }
 }
