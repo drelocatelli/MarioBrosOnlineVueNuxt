@@ -1,5 +1,5 @@
 class Decoration {
-    constructor({ x, y, width, height, background, css, game }) {
+    constructor({ x, y, width, height, background, css, game, classList }) {
       this.x = x;
       this.y = y;
       this.width = width;
@@ -7,6 +7,7 @@ class Decoration {
       this.background = background;
       this.game = game;
       this.css = css;
+      this.classList = classList;
   
       this.createElement();
     }
@@ -20,6 +21,7 @@ class Decoration {
       this.element.style.bottom = this.y + "px";
       this.element.style.left = this.x + "px";
       this.element.classList.add("decoration");
+      this.element.setAttribute('class', this.classList);
   
       if (this.css) {
         const existingCssText = this.element.getAttribute("style") || "";

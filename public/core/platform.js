@@ -1,14 +1,6 @@
 class Platform {
-    x;
-    y;
-    width;
-    height;
-    background;
-    game;
-    element;
-    id;
 
-    constructor({ x, y, width, height, background, css, game, id }) {
+    constructor({ x, y, width, height, background, css, game, id, classList }) {
         this.x = parseFloat(x);
         this.y = parseFloat(y);
         this.width = width;
@@ -17,6 +9,7 @@ class Platform {
         this.game = game;
         this.id = id;
         this.css = css;
+        this.classList = classList;
 
         this.createElement();
     }
@@ -41,5 +34,6 @@ class Platform {
         this.element.style.background = this.background;
         this.element.style.width = this.width;
         this.element.style.left = this.x + 'px';
+        this.element.setAttribute('class', this.classList);
     }
 }
