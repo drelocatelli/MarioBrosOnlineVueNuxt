@@ -72,7 +72,7 @@ class Player {
             const { event } = detail;
             const { player } = detail;
             player.isMoving = true;
-
+            
             if (event.type == 'keyup') {
                 if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
                     player.css = Person.initial();
@@ -183,15 +183,15 @@ class Player {
             const playerRect = this.element.getBoundingClientRect();
             const platformRect = platform.element.getBoundingClientRect();
             
-            if (
-                platform.id !== 'main' &&
-                Collision.isColliding(platformRect, playerRect) &&
-                !Collision.isAbove(playerRect, platformRect) &&
-                Collision.hasTopCollision(playerRect, platformRect)
-            ) {
-                this.jumping = false;
-                this.yVelocity -= this.gravity;
-            }
+            // if (
+            //     platform.id !== 'main' &&
+            //     Collision.isColliding(platformRect, playerRect) &&
+            //     !Collision.isAbove(playerRect, platformRect) &&
+            //     Collision.hasTopCollision(this)
+            // ) {
+            //     this.jumping = false;
+            //     this.yVelocity -= this.gravity;
+            // }
 
             if (
                 playerRect.x < platformRect.x + platformRect.width &&
