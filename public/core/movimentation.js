@@ -36,12 +36,15 @@ class Movimentation {
     }
 
     static jump(player) {
+        if(Collision.hasTopCollision(player)) console.log('has top collision')
+        
         if (!player.jumping) {
-            player.jumping = true;
             if (!Collision.hasTopCollision(player)) {
+                player.jumping = true;
                 player.yVelocity = -10;
             } else {
-                player.yVelocity = -4;
+                player.jumping = false;
+                player.yVelocity = 0;
             }
         }
     }

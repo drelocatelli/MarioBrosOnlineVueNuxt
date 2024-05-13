@@ -19,7 +19,7 @@ class Collision {
             const element2Rect = platform.element.getBoundingClientRect();
 
             return (
-                !(element1rect.y < element2Rect.y) && 
+                (element1rect.y + element1rect.height > element2Rect.y + element2Rect.height) && 
                 element1rect.x + element1rect.width < element2Rect.x + element2Rect.width
             );
         }
