@@ -177,12 +177,12 @@ class Player {
             this.yVelocity = 0;
         }
 
+        
         // Check collision with platforms
         for (let platform of platforms) {
             const playerRect = this.element.getBoundingClientRect();
             const platformRect = platform.element.getBoundingClientRect();
-
-            // todo prevent player jump to platform if he's bellow that
+            
             if (
                 platform.id !== 'main' &&
                 Collision.isColliding(platformRect, playerRect) &&
