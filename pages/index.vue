@@ -17,7 +17,7 @@ onMounted(() => {
     ]);
     
     Game.addPlatforms([
-        new Platform({x: 0, y: 169, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box'}),
+        new Platform({x: 705, y: 169, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box'}),
     ]);
 
     
