@@ -68,9 +68,9 @@ class Player {
 
     movimentationEvent() {
         document.addEventListener(GameEvent.playerMovimentation, (e) => {
-            const {detail} = e;
-            const {event} = detail;
-            const {player} = detail;
+            const { detail } = e;
+            const { event } = detail;
+            const { player } = detail;
             player.isMoving = true;
 
             if (event.type == 'keyup') {
@@ -183,15 +183,14 @@ class Player {
             const platformRect = platform.element.getBoundingClientRect();
 
             // prevent player jump to platform if he's bellow that
-            if (platform.id !== 'main') {
-                if (Collision.isColliding(platformRect, playerRect)) {
-                    if (!Collision.isAbove(playerRect, platformRect)) {
-                        if(Collision.hasTopCollision(playerRect, platformRect)) {
-                            this.jumping = false;
-                            this.yVelocity -= this.gravity;
-                        }
-                    }
-                }
+            if (
+                platform.id !== 'main' &&
+                Collision.isColliding(platformRect, playerRect) &&
+                !Collision.isAbove(playerRect, platformRect) &&
+                Collision.hasTopCollision(playerRect, platformRect)
+            ) {
+                this.jumping = false;
+                this.yVelocity -= this.gravity;
             }
 
             if (
