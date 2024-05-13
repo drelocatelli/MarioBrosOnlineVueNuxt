@@ -182,7 +182,7 @@ class Player {
             const playerRect = this.element.getBoundingClientRect();
             const platformRect = platform.element.getBoundingClientRect();
 
-            // prevent player jump to platform if he's bellow that
+            // todo prevent player jump to platform if he's bellow that
             if (
                 platform.id !== 'main' &&
                 Collision.isColliding(platformRect, playerRect) &&
