@@ -12,17 +12,24 @@ class Collision {
         );
     }
 
-    static hasTopCollision(element1) {
+    static hasTopCollision(element1, element2) {
         let platforms = Game.platforms.getValue().filter((platform) => platform.id !== 'main');
         for (let platform of platforms) {
             const element1rect = element1.element.getBoundingClientRect();
-            const element2Rect = platform.element.getBoundingClientRect();
+            const element2Rect = element2 ?? platform.element.getBoundingClientRect();
 
             return (
                 (element1rect.y + element1rect.height > element2Rect.y + element2Rect.height) && 
                 element1rect.x + element1rect.width < element2Rect.x + element2Rect.width
             );
         }
+    }
+
+    // return what platform has colliding at the top
+    static whichPlatformCollisionAtTop(element1) {
+        let platforms = Game.platforms.getValue().filter((platform) => platform.id !== 'main');
+        const platform = platforms.find(platform => Collision.hasTopCollision(element1));
+        return platform;
     }
     
 }
