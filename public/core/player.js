@@ -2,6 +2,7 @@ const movimentationEvent = new CustomEvent('player-movimentation');
 
 class Player {
     isColliding = false;
+    grounded = true;
 
     constructor({ x, y, width, height, background, css, id, game }) {
         this.gravity = 0.18;
@@ -14,6 +15,7 @@ class Player {
         this.yVelocity = 0;
         this.background = background ?? 'red';
         this.game = Game.currentGame;
+        this.grounded = true;
         this.css = css;
         this.id = id;
         this.name = undefined;
@@ -79,6 +81,13 @@ class Player {
                     player.mergeCSS();
                     Movimentation.stop(player);
                 }
+
+                if(event.key === 'ArrowUp' || event.key === ' ') {
+                    player.css = Person.initial();
+                    player.mergeCSS();
+                    Movimentation.jump(player);
+                }
+
             } else if (event.type == 'keydown') {
                 new Movimentation(player, event);
             }
@@ -168,52 +177,40 @@ class Player {
         }
     }
 
+    groundCollision(platforms) {
+        // ground collision
+        const playerRect = this.element.getBoundingClientRect();
+        const platformRect = platforms.find(platform => platform.id == 'main').element.getBoundingClientRect();
+
+        if (
+            playerRect.x < platformRect.x + platformRect.width &&
+            playerRect.x + playerRect.width > platformRect.x &&
+            playerRect.y + playerRect.height > platformRect.y &&
+            playerRect.y < platformRect.y + platformRect.height // Check if player's top is below platform's bottom
+        ) {
+            this.jumping = false;
+            this.yVelocity = 0;
+
+            //change it for player size
+            const playerSizeDist = 12;
+            this.y = platformRect.y - this.height - playerSizeDist;
+
+        }
+    }
+
     checkCollision() {
         const platforms = this.game.value.platforms.getValue();
 
-        // Check if the player is above the ceiling
-        if (this.y < 0) {
-            this.y = 0;
-            this.yVelocity = 0;
-        }
-
+        // Check collision with the ground
         
+        this.groundCollision(platforms);
+
         // Check collision with platforms
         for (let platform of platforms) {
-            const playerRect = this.element.getBoundingClientRect();
             const platformRect = platform.element.getBoundingClientRect();
             
-            // if (
-            //     platform.id !== 'main' &&
-            //     Collision.isColliding(platformRect, playerRect) &&
-            //     !Collision.isAbove(playerRect, platformRect) &&
-            //     Collision.hasTopCollision(this)
-            // ) {
-            //     this.jumping = false;
-            //     this.yVelocity -= this.gravity;
-            // }
-
-            if (
-                playerRect.x < platformRect.x + platformRect.width &&
-                playerRect.x + playerRect.width > platformRect.x &&
-                playerRect.y + playerRect.height > platformRect.y &&
-                playerRect.y < platformRect.y + platformRect.height // Check if player's top is below platform's bottom
-            ) {
-                this.jumping = false;
-                this.yVelocity = 0;
-
-                //change it for player size
-                const playerSizeDist = 12;
-                this.y = platformRect.y - this.height - playerSizeDist;
-            }
+            
         }
-
-        // Check collision with the bottom of the screen
-        const screenHeight = Game.area.height - 25;
-        if (this.y + this.height > screenHeight) {
-            this.y = screenHeight - this.height;
-            this.yVelocity = 0;
-            this.jumping = false;
-        }
+        
     }
 }

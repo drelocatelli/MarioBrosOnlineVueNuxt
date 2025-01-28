@@ -11,12 +11,21 @@ class Game {
     static players = new BehaviorSubject([]);
     static decorations = new BehaviorSubject([]);
 
+    /**
+     * Adds decorations to the current game.
+     * @param {Decoration[]} decorations - An array of Decoration objects to add to the game.
+     */
     static addDecorations(decoration) {
         this.decorations.next([
             ...this.decorations.value,
             ...decoration
         ]);
     }
+
+    /**
+     * Adds players to the current game.
+     * @param {Player[]} players - An array of Player objects to add to the game.
+     */
 
     static addPlayers(players) {
         this.players.next([
@@ -25,6 +34,10 @@ class Game {
         ]);
     }
 
+    /**
+     * Removes a player from the game.
+     * @param {string} playerId the id of the player to remove
+     */
     static removePlayer(playerId) {
         const currentPlayers = this.players.value.filter((player) => player.id != playerId);
         this.players.next(currentPlayers);
@@ -34,6 +47,10 @@ class Game {
         document.querySelector(`#${playerId}.user_name`).remove();
     }
 
+    /**
+     * Adds platforms to the current game.
+     * @param {Platform[]} platforms The platforms to add.
+     */
     static addPlatforms(platforms) {
         this.platforms.next([
             ...this.platforms.value,

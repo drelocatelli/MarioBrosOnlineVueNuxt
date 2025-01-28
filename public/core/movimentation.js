@@ -36,13 +36,9 @@ class Movimentation {
     }
 
     static jump(player) {
-        if (!player.jumping) {
+        if(!player.jumping) {
+            player.yVelocity = -8;
             player.jumping = true;
-            if (!Collision.hasTopCollision(player)) {
-                player.yVelocity = -10;
-            } else if(Collision.whichPlatformCollisionAtTop(player)) {
-                player.yVelocity = 0;
-            }
         }
     }
 }
