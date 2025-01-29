@@ -202,36 +202,43 @@ class Player {
         const playerRect = this.element.getBoundingClientRect();
         const platformRect = platform.element.getBoundingClientRect();
         
+        // collision detected
+        const overlapX = Math.min(
+            Math.abs(playerRect.x + playerRect.width - platformRect.x),
+            Math.abs(platformRect.x + platformRect.width - playerRect.x)
+        );
+
+        const overlapY = Math.min(
+            Math.abs(playerRect.y + playerRect.height - platformRect.y),
+            Math.abs(platformRect.y + platformRect.height - playerRect.y)
+        );
+        
         if(
             playerRect.x + playerRect.width > platformRect.x &&
             playerRect.x < platformRect.x + platformRect.width &&
             playerRect.y + playerRect.height > platformRect.y &&
             playerRect.y < platformRect.y + platformRect.height
         ) {
-            const topCollision = this.yVelocity > 0;
-            const bottomCollision = !topCollision;
-            
-            // top collision
-            if (topCollision) {
-                this.yVelocity = 0;
-                this.y = platformRect.y - playerRect.height;
-                this.jumping = false;
-            } 
-            // bottom collision
-            else {
-                this.yVelocity = 0;
-                this.y = platformRect.y + this.height + 3;
-            }
+            // horizontal collision
+            if(overlapX < overlapY) {
+                if(this.xVelocity > 0) {
+                    this.x = platformRect.x - playerRect.width;
+                } else if(this.xVelocity < 0) {
+                    this.x = platformRect.x + platformRect.width;
+                }
 
-            console.log(bottomCollision)
-            // horizontal collision            
-            if(
-                bottomCollision &&
-                playerRect.x + playerRect.width < platformRect.x &&
-                playerRect.x > platformRect.x + platformRect.width
-            ) {
-                console.log('horizontal')
-            } 
+                this.xVelocity = 0;
+            } else  {
+                // vertical collision
+                if(this.yVelocity > 0) {
+                    this.y = platformRect.y - playerRect.height;
+                    this.yVelocity = 0;
+                    this.jumping = false;
+                } else if(this.yVelocity < 0) {
+                    this.y = platformRect.y + platformRect.height;
+                    this.yVelocity = 0;
+                }
+            }
 
         }
     }
