@@ -27,7 +27,7 @@ class Items {
 
   
     static firstGame(player, playerRect, surpriseBox, surpriseBoxRect) {
-        Collision.onBottomCollision((platform) => {
+        Collision.onBottomCollision(async (platform) => {
             // first surprise box
            if(platform.id == 1) {
             if(playerRect.left >= 755)
@@ -42,8 +42,79 @@ class Items {
                 
                 surpriseItem.style.top = y + 'px';
                 surpriseItem.style.left = x + 'px';
-                
+
                 Game.element.appendChild(surpriseItem);
+
+                const currentSurprisePosYConst = parseInt(surpriseItem.style.top);
+                let currentSurprisePosY = parseInt(surpriseItem.style.top);
+
+                const currentSurprisePosXConst = parseInt(surpriseItem.style.left);
+                let currentSurprisePosX = parseInt(surpriseItem.style.left);
+
+                let topMovimentation = setInterval(() => {
+                    // set surprise movimentation top
+                    currentSurprisePosY -= 0.5;
+                    if(
+                        currentSurprisePosY <= currentSurprisePosYConst &&
+                        currentSurprisePosY >= currentSurprisePosYConst - 50
+                    ) {
+                        surpriseItem.style.top = currentSurprisePosY + 'px';
+                    } else {
+                        clearInterval(topMovimentation);
+                    }
+                }, 1);
+
+                await Functions.wait(300);
+
+                let rightMovimentation = setInterval(() => {
+                    // set surprise movimentation right
+                    currentSurprisePosX += 0.7;
+                    if(
+                        currentSurprisePosX >= currentSurprisePosXConst &&
+                        currentSurprisePosX <= currentSurprisePosXConst + 50
+                    ) {
+                        surpriseItem.style.left = currentSurprisePosX + 'px';
+                    } else {
+                        clearInterval(rightMovimentation);
+                    }
+                }, 3);
+
+                await Functions.wait(300);
+
+                const mainPlatform = Game.platforms.getValue().find(platform => platform.id == 'main').element.getBoundingClientRect();
+
+
+                // make surprise fall
+                let fallMovimentation = setInterval(() => {
+                    const mainPlatformPosY = mainPlatform.top - mainPlatform.height
+                    
+                    currentSurprisePosY += 0.8;
+
+                    if (
+                        currentSurprisePosY < mainPlatformPosY + 28
+                    ) {
+                        surpriseItem.style.top = currentSurprisePosY + 'px';
+                    } else {
+                        clearInterval(fallMovimentation);
+                    }
+
+                }, 0.1);
+
+                await Functions.wait(800);
+                
+
+                let leftMovimentation = setInterval(() => {
+                    // set surprise movimentation right
+                    currentSurprisePosX -= 0.7;
+                    if(
+                        currentSurprisePosX <= currentSurprisePosX + 200 
+                    ) {
+                        surpriseItem.style.left = currentSurprisePosX + 'px';
+                    } else {
+                        clearInterval(leftMovimentation);
+                    }
+                }, 3);
+                
 
                 this.itemTopCollision = surpriseItem;
             }

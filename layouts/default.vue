@@ -33,6 +33,10 @@ useHead({
             body: true,
         },
         {
+            src: 'core/functions.js',
+            body: true,
+        },
+        {
             src: 'core/event.js',
             body: true,
         },
