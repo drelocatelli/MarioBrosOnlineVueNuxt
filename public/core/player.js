@@ -208,8 +208,11 @@ class Player {
             playerRect.y + playerRect.height > platformRect.y &&
             playerRect.y < platformRect.y + platformRect.height
         ) {
+            const topCollision = this.yVelocity > 0;
+            const bottomCollision = !topCollision;
+            
             // top collision
-            if (this.yVelocity > 0) {
+            if (topCollision) {
                 this.yVelocity = 0;
                 this.y = platformRect.y - playerRect.height;
                 this.jumping = false;
@@ -219,6 +222,16 @@ class Player {
                 this.yVelocity = 0;
                 this.y = platformRect.y + this.height + 3;
             }
+
+            console.log(bottomCollision)
+            // horizontal collision            
+            if(
+                bottomCollision &&
+                playerRect.x + playerRect.width < platformRect.x &&
+                playerRect.x > platformRect.x + platformRect.width
+            ) {
+                console.log('horizontal')
+            } 
 
         }
     }
