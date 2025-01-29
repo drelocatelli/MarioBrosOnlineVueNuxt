@@ -7,9 +7,9 @@ class Items {
      * If a collision is detected, triggers any associated events or effects.
      * 
      * @param {Player} player - The player object to check for collision with the surprise box.
+     * @param {Number} levelNumber - The current level number.
      */
-
-    static surpriseBox(player) {
+    static surpriseBox(player, levelNumber) {
         const suprisesBoxes = document.querySelectorAll('.surprise_box');
         const playerRect = player.element.getBoundingClientRect();
         this.itemTopCollision = undefined;
@@ -17,7 +17,10 @@ class Items {
         for(let surpriseBox of suprisesBoxes) {
             const surpriseBoxRect = surpriseBox.getBoundingClientRect();
 
-            this.firstGame(player, playerRect, surpriseBox, surpriseBoxRect);
+            switch(levelNumber) {
+                case 1:
+                    return this.firstGame(player, playerRect, surpriseBox, surpriseBoxRect);
+            }
         }
 
     }

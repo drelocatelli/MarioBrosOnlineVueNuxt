@@ -19,7 +19,13 @@ onMounted(() => {
         new Platform({x: 705, y: 150, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box', id: 1}),
     ]);
     
-    Game.run();
+
+    Game.run(
+        // player cb
+        (player) => {
+            Items.surpriseBox(player, 1);
+        }
+    );
 
 });
 </script>

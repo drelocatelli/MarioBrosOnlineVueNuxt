@@ -57,21 +57,30 @@ class Game {
             ...platforms
         ]);
     }
-    static run() {
-        // return
+
+    /**
+     * The main game loop.
+     * Subscribes to the players and platforms behaviors and updates/draws them accordingly.
+     * @param {Function} playerCb a callback to be called on each player, with the player as an argument.
+     */
+    static run(playerCb) {
         Game.currentGame.next(this);
         this.players.subscribe((players) => {
             for (const player of players) {
                 player.update();
                 player.updatePosition();
-                Items.surpriseBox(player);
+                if (typeof playerCb === "function") {
+                    playerCb(player);
+                } else {
+                    console.warn("playerCb is not a function", playerCb);
+                }
             }
-        })
+        });
         this.platforms.subscribe((platforms) => {
             for (const platform of platforms) {
                 platform.draw();
             }
-        })
-        requestAnimationFrame(this.run.bind(this));
-    }    
+        });
+        requestAnimationFrame(() => this.run(playerCb)); // Pass playerCb explicitly
+    }
 }
