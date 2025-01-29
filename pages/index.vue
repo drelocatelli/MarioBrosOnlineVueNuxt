@@ -1,5 +1,4 @@
 <script setup>
-    
 onMounted(() => {
     Game.addDecorations([
         // plantas
@@ -17,10 +16,8 @@ onMounted(() => {
     ]);
     
     Game.addPlatforms([
-        new Platform({x: 705, y: 150, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box'}),
-        new Platform({x: 100, y: 169, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box'}),
+        new Platform({x: 705, y: 150, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box', id: 1}),
     ]);
-
     
     Game.run();
 
@@ -40,5 +37,6 @@ onMounted(() => {
     background-size: 620px;
     image-rendering: pixelated;
 }
+
 
 </style>

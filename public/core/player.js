@@ -56,6 +56,8 @@ class Player {
             this.mergeCSS();
         }
         Game.element.appendChild(this.element);
+
+        this.playerRect  = this.element.getBoundingClientRect();
     }
 
     update() {
@@ -179,8 +181,8 @@ class Player {
 
     groundCollision(platforms) {
         // ground collision
-        const playerRect = this.element.getBoundingClientRect();
         const platformRect = platforms.find(platform => platform.id == 'main').element.getBoundingClientRect();
+        const playerRect = this.element.getBoundingClientRect();
 
         if (
             playerRect.x < platformRect.x + platformRect.width &&
@@ -212,6 +214,9 @@ class Player {
             Math.abs(playerRect.y + playerRect.height - platformRect.y),
             Math.abs(platformRect.y + platformRect.height - playerRect.y)
         );
+
+        this.overlapX = overlapX;
+        this.overlapY = overlapY;
         
         if(
             playerRect.x + playerRect.width > platformRect.x &&
@@ -221,9 +226,11 @@ class Player {
         ) {
             // horizontal collision
             if(overlapX < overlapY) {
+                // moving right
                 if(this.xVelocity > 0) {
                     this.x = platformRect.x - playerRect.width;
                 } else if(this.xVelocity < 0) {
+                    // moving left
                     this.x = platformRect.x + platformRect.width;
                 }
 
@@ -231,12 +238,15 @@ class Player {
             } else  {
                 // vertical collision
                 if(this.yVelocity > 0) {
+                    // failing
                     this.y = platformRect.y - playerRect.height;
                     this.yVelocity = 0;
                     this.jumping = false;
                 } else if(this.yVelocity < 0) {
+                    // jumping
                     this.y = platformRect.y + platformRect.height;
                     this.yVelocity = 0;
+                    this.jumping = true;
                 }
             }
 

@@ -1,5 +1,21 @@
 class Platform {
 
+    /**
+     * Constructor for Platform.
+     *
+     * @param {{ x: number|string, y: number|string, width: number|string, height: number|string, background: string, css: string, game: Game, id: string, classList: string }} params
+     * @param {number|string} params.x - x position of the platform
+     * @param {number|string} params.y - y position of the platform
+     * @param {number|string} params.width - width of the platform
+     * @param {number|string} params.height - height of the platform
+     * @param {string} params.background - background of the platform
+     * @param {string} params.css - additional css for the platform
+     * @param {Game} params.game - the game object
+     * @param {string} params.id - id of the platform
+     * @param {string} params.classList - additional class names for the platform
+     *
+     * Creates an element and sets it's properties.
+     */
     constructor({ x, y, width, height, background, css, game, id, classList }) {
         this.x = parseFloat(x);
         this.y = parseFloat(y);

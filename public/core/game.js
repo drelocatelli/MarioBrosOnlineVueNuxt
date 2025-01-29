@@ -57,7 +57,6 @@ class Game {
             ...platforms
         ]);
     }
-
     static run() {
         // return
         Game.currentGame.next(this);
@@ -65,6 +64,7 @@ class Game {
             for (const player of players) {
                 player.update();
                 player.updatePosition();
+                Items.surpriseBox(player);
             }
         })
         this.platforms.subscribe((platforms) => {

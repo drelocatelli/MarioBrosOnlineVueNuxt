@@ -41,4 +41,28 @@ class Collision {
         );
     }
 
+  
+    /**
+     * Executes a callback if the bottom of a rectangle has collided with another.
+     * @param {function} cb - callback to execute if the bottom of the rectangle has collided.
+     * @param {number} overlapX - the overlap of the x coordinates of the two rectangles.
+     * @param {number} overlapY - the overlap of the y coordinates of the two rectangles.
+     * @param {number} yVelocity - the vertical velocity of the rectangle.
+     * @param {DOMRect} rect1 - the first rectangle.
+     * @param {DOMRect} rect2 - the second rectangle.
+     */
+    static onBottomCollision(cb, overlapX, overlapY, yVelocity, rect1, platform) {
+        const platformRect = platform.getBoundingClientRect();
+        
+        if(overlapX > overlapY) {
+            if(yVelocity < 0 && rect1.y > platformRect.y) {
+                // width collision
+                if(rect1.x + rect1.width > platformRect.x && rect1.x < platformRect.x + platformRect.width) {
+                    cb(platform);
+                }
+            }
+        }
+        
+    }
+
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { socket } from '../socket.ts';
 import Watch from 'public/core/watch.js';
+import '../public/assets/basic.css';
 
 const online = ref(false);
 const transport = ref('N/A');
@@ -69,6 +70,10 @@ useHead({
         },
         {
             src: `core/decoration.js`,
+            body: true,
+        },
+        {
+            src: 'core/items.js',
             body: true,
         },
     ],
