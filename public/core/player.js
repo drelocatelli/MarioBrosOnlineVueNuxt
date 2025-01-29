@@ -208,12 +208,19 @@ class Player {
             playerRect.y + playerRect.height > platformRect.y &&
             playerRect.y < platformRect.y + platformRect.height
         ) {
-            
-            this.yVelocity = 0;
-            this.y = (platformRect.y + this.height) + 10;
-            this.xVelocity = 0;
-        }
+            // top collision
+            if (this.yVelocity > 0) {
+                this.yVelocity = 0;
+                this.y = platformRect.y - playerRect.height;
+                this.jumping = false;
+            } 
+            // bottom collision
+            else {
+                this.yVelocity = 0;
+                this.y = platformRect.y + this.height + 3;
+            }
 
+        }
     }
     
     checkCollision() {

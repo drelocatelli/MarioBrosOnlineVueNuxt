@@ -31,5 +31,14 @@ class Collision {
         const platform = platforms.find(platform => Collision.hasTopCollision(element1));
         return platform;
     }
-    
+
+    static isHorizontalCollision(rect1, rect2) {
+        return (
+            (rect1.x < rect2.x + rect2.width &&
+             rect1.x + rect1.width > rect2.x) ||
+            (rect2.x < rect1.x + rect1.width &&
+             rect2.x + rect2.width > rect1.x)
+        );
+    }
+
 }
