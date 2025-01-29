@@ -37,7 +37,7 @@ class Movimentation {
 
     static jump(player) {
         if(!player.jumping) {
-            player.yVelocity = -8;
+            player.yVelocity = -10;
             player.jumping = true;
         }
     }

@@ -198,19 +198,33 @@ class Player {
         }
     }
 
+    platformCollision(platform) {
+        const playerRect = this.element.getBoundingClientRect();
+        const platformRect = platform.element.getBoundingClientRect();
+        
+        if(
+            playerRect.x + playerRect.width > platformRect.x &&
+            playerRect.x < platformRect.x + platformRect.width &&
+            playerRect.y + playerRect.height > platformRect.y &&
+            playerRect.y < platformRect.y + platformRect.height
+        ) {
+            
+            this.yVelocity = 0;
+            this.y = (platformRect.y + this.height) + 10;
+            this.xVelocity = 0;
+        }
+
+    }
+    
     checkCollision() {
-        const platforms = this.game.value.platforms.getValue();
+        let platforms = this.game.value.platforms.getValue();
+        const notMainPlatforms = platforms.filter((platform) => platform.id !== 'main');
 
         // Check collision with the ground
-        
         this.groundCollision(platforms);
 
         // Check collision with platforms
-        for (let platform of platforms) {
-            const platformRect = platform.element.getBoundingClientRect();
-            
-            
-        }
+        notMainPlatforms.forEach((platform) => this.platformCollision(platform));
         
     }
 }
