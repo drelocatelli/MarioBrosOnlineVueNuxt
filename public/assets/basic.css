@@ -9,3 +9,63 @@
     background-size: 640px;
     background-position: -344px -327.1px;
 }
+
+
+@keyframes bee {
+    0% {
+        transform: translateY(100px);
+        scale: 1;
+    
+    }
+    50% {
+        transform: scale(1.2);
+        transform: translateX(100px);
+        scale: 1.2;
+    }
+    100% {
+        transform: scale(1);    
+        transform: translateY(-100px);
+        scale: 1;
+    }
+}
+
+@keyframes surprise_box {
+    0% {
+        scale: 1;
+    }
+    12.5% {
+        transform: translateY(-100px);
+    }
+    25% {
+        transform: translateX(100px) translateY(100px);
+    }
+    37.5% {
+        transform: translateX(100px) translateY(130px);
+        scale: 1;
+    }
+    50% {
+        transform: translateX(100px) translateY(130px);
+    }
+    62.5% {
+        transform: translateX(0) translateY(130px);
+    }
+    75% {
+        transform: translateX(-100px) translateY(130px);
+        scale: 1;
+    }
+    87.5%, 90%, 93%, 95%, 97.5%, 100% {
+        transform: translateX(-1000px) translateY(130px);
+    }
+    100% {
+        transform: translateX(-1000px);
+        scale: 1;
+    }
+}
+
+
+/* .box_surprise_position_right {
+    animation: surprise_box;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+} */

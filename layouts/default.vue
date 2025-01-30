@@ -80,6 +80,14 @@ useHead({
             src: 'core/items.js',
             body: true,
         },
+        {
+            src: 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js',
+            body: true
+        },
+        {
+            src: 'core/animations.js',
+            body: true
+        }
     ],
 });
 </script>

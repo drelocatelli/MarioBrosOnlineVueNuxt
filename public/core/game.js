@@ -69,11 +69,9 @@ class Game {
             for (const player of players) {
                 player.update();
                 player.updatePosition();
-                if (typeof playerCb === "function") {
+                if (playerCb != undefined && typeof playerCb === "function") {
                     playerCb(player);
-                } else {
-                    console.warn("playerCb is not a function", playerCb);
-                }
+                } 
             }
         });
         this.platforms.subscribe((platforms) => {
@@ -81,6 +79,6 @@ class Game {
                 platform.draw();
             }
         });
-        requestAnimationFrame(() => this.run(playerCb)); // Pass playerCb explicitly
+        requestAnimationFrame(() => this.run(playerCb));
     }
 }

@@ -13,7 +13,7 @@ class Items {
         const suprisesBoxes = document.querySelectorAll('.surprise_box');
         const playerRect = player.element.getBoundingClientRect();
         this.itemTopCollision = undefined;
-        
+
         for(let surpriseBox of suprisesBoxes) {
             const surpriseBoxRect = surpriseBox.getBoundingClientRect();
 
@@ -28,6 +28,15 @@ class Items {
   
     static firstGame(player, playerRect, surpriseBox, surpriseBoxRect) {
         Collision.onBottomCollision(async (platform) => {
+            const surpriseItemEl = Game.element.querySelector('.surprise_item');
+            
+            // add only once
+            if(surpriseItemEl && surpriseItemEl.length != 0) {
+                return;
+            }
+            
+            const surpriseItem = document.createElement('div');
+
             // first surprise box
            if(platform.id == 1) {
             if(playerRect.left >= 755)
@@ -37,13 +46,19 @@ class Items {
                 const y = surpriseBoxRect.bottom - playerRect.height - 8;
 
                 // create box surprise
-                const surpriseItem = document.createElement('div');
                 surpriseItem.classList.add('box_surprise_1');
+                surpriseItem.classList.add('surprise_item');
+                surpriseItem.classList.add('box_surprise_position_right');
+                surpriseItem.style.position = 'absolute';
                 
                 surpriseItem.style.top = y + 'px';
                 surpriseItem.style.left = x + 'px';
 
                 Game.element.appendChild(surpriseItem);
+
+                Animations.firstSurpriseBoxAnim(surpriseBox, surpriseItem);
+
+                return;
 
                 const currentSurprisePosYConst = parseInt(surpriseItem.style.top);
                 let currentSurprisePosY = parseInt(surpriseItem.style.top);

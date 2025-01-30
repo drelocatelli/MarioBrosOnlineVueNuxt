@@ -44,5 +44,4 @@ onMounted(() => {
     image-rendering: pixelated;
 }
 
-
 </style>
