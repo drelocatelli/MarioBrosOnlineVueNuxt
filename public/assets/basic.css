@@ -10,6 +10,19 @@
     background-position: -344px -327.1px;
 }
 
+.coin_surprise_1 {
+    background: url(/assets/basic.png);
+    /* background: red; */
+    width: 33px;
+    height: 34px;
+    position: absolute;
+    /* bottom: 100px; */
+    /* left: 100px; */
+    z-index: 1000000000000000;
+    background-size: 640px;
+    background-position: 273px 544px;
+}
+
 
 @keyframes bee {
     0% {

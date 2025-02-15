@@ -19,119 +19,91 @@ class Items {
 
             switch(levelNumber) {
                 case 1:
-                    return this.firstGame(player, playerRect, surpriseBox, surpriseBoxRect);
+                    return this.firstLevelSurpriseBox(player, playerRect, surpriseBox, surpriseBoxRect);
             }
         }
 
     }
 
+    /**
+     * Checks for collision between the player and the surprise box.
+     * If a collision is detected, triggers any associated events or effects.
+     * 
+     * @param {Player} player - The player object to check for collision with the surprise box.
+     * @param {Number} levelNumber - The current level number.
+     */
+    static surpriseCoin(player, levelNumber) {
+        const surpriseCoins = document.querySelectorAll('.surprise_coin');
+        const playerRect = player.element.getBoundingClientRect();
+
+        this.itemTopCollision = undefined;
+        
+        for(let surpriseCoin of surpriseCoins) {
+            const surpriseCoinRect = surpriseCoin.getBoundingClientRect();
+
+            switch(levelNumber) {
+                case 1:
+                    return this.firstLevelSurpriseCoin(player, playerRect, surpriseCoin, surpriseCoinRect);
+            }
+        }
+
+    }
+
+    static firstLevelSurpriseCoin(player, playerRect, surpriseBox, surpriseBoxRect) {
+        const x = 718;
+        const y = surpriseBoxRect.bottom - playerRect.height - 8;
+
+        this.surpriseCb(player, playerRect, surpriseBox, 'coin_surprise_item', 'coin_surprise_1', (playerRect.left >= 708 && playerRect.left < 755), x, y, (surpriseItem) => {
+            Animations.firstSurpriseCoinAnim(surpriseBox, surpriseItem);
+        });
+    }
+
   
-    static firstGame(player, playerRect, surpriseBox, surpriseBoxRect) {
+    static firstLevelSurpriseBox(player, playerRect, surpriseBox, surpriseBoxRect) {
+        const x = surpriseBoxRect.right - playerRect.width + 8;
+        const y = surpriseBoxRect.bottom - playerRect.height - 8;
+
+        this.surpriseCb(player, playerRect, surpriseBox, 'surprise_item', 'box_surprise_1', playerRect.left >= 755, x, y, (surpriseItem) => {
+            Animations.firstSurpriseBoxAnim(surpriseBox, surpriseItem);
+        });
+    }
+
+    static surpriseCb(player, playerRect, surpriseBox, surpriseClass, surpriseClassItemId, posXColission, objectPosX, objectPosY, cb) {
         Collision.onBottomCollision(async (platform) => {
-            const surpriseItemEl = Game.element.querySelector('.surprise_item');
+            const surpriseItemEl = Game.element.querySelector('.' + surpriseClass);
             
             // add only once
             if(surpriseItemEl && surpriseItemEl.length != 0) {
                 return;
             }
-            
+
             const surpriseItem = document.createElement('div');
+
 
             // first surprise box
            if(platform.id == 1) {
-            if(playerRect.left >= 755)
+            // right platform
+            if(posXColission)
             if(this.itemTopCollision == undefined) {
 
-                const x = surpriseBoxRect.right - playerRect.width + 8;
-                const y = surpriseBoxRect.bottom - playerRect.height - 8;
+                const x = objectPosX;
+                const y = objectPosY;
 
                 // create box surprise
-                surpriseItem.classList.add('box_surprise_1');
-                surpriseItem.classList.add('surprise_item');
+                surpriseItem.classList.add(surpriseClassItemId);
+                surpriseItem.classList.add(surpriseClass);
                 surpriseItem.classList.add('box_surprise_position_right');
                 surpriseItem.style.position = 'absolute';
                 
                 surpriseItem.style.top = y + 'px';
                 surpriseItem.style.left = x + 'px';
 
+            console.log(surpriseItem)
+
+
                 Game.element.appendChild(surpriseItem);
 
-                Animations.firstSurpriseBoxAnim(surpriseBox, surpriseItem);
-
-                return;
-
-                const currentSurprisePosYConst = parseInt(surpriseItem.style.top);
-                let currentSurprisePosY = parseInt(surpriseItem.style.top);
-
-                const currentSurprisePosXConst = parseInt(surpriseItem.style.left);
-                let currentSurprisePosX = parseInt(surpriseItem.style.left);
-
-                let topMovimentation = setInterval(() => {
-                    // set surprise movimentation top
-                    currentSurprisePosY -= 0.5;
-                    if(
-                        currentSurprisePosY <= currentSurprisePosYConst &&
-                        currentSurprisePosY >= currentSurprisePosYConst - 50
-                    ) {
-                        surpriseItem.style.top = currentSurprisePosY + 'px';
-                    } else {
-                        clearInterval(topMovimentation);
-                    }
-                }, 1);
-
-                await Functions.wait(300);
-
-                let rightMovimentation = setInterval(() => {
-                    // set surprise movimentation right
-                    currentSurprisePosX += 0.7;
-                    if(
-                        currentSurprisePosX >= currentSurprisePosXConst &&
-                        currentSurprisePosX <= currentSurprisePosXConst + 50
-                    ) {
-                        surpriseItem.style.left = currentSurprisePosX + 'px';
-                    } else {
-                        clearInterval(rightMovimentation);
-                    }
-                }, 3);
-
-                await Functions.wait(300);
-
-                const mainPlatform = Game.platforms.getValue().find(platform => platform.id == 'main').element.getBoundingClientRect();
-
-
-                // make surprise fall
-                let fallMovimentation = setInterval(() => {
-                    const mainPlatformPosY = mainPlatform.top - mainPlatform.height
-                    
-                    currentSurprisePosY += 0.8;
-
-                    if (
-                        currentSurprisePosY < mainPlatformPosY + 28
-                    ) {
-                        surpriseItem.style.top = currentSurprisePosY + 'px';
-                    } else {
-                        clearInterval(fallMovimentation);
-                    }
-
-                }, 0.1);
-
-                await Functions.wait(800);
-                
-
-                let leftMovimentation = setInterval(() => {
-                    // set surprise movimentation right
-                    currentSurprisePosX -= 0.7;
-                    if(
-                        currentSurprisePosX <= currentSurprisePosX + 200 
-                    ) {
-                        surpriseItem.style.left = currentSurprisePosX + 'px';
-                    } else {
-                        clearInterval(leftMovimentation);
-                    }
-                }, 3);
-                
-
-                this.itemTopCollision = surpriseItem;
+                cb(surpriseItem);
             }
 
         }

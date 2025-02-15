@@ -12,18 +12,19 @@ onMounted(() => {
         new Decoration({x: 300, y: -27, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x', css: 'z-index:1;'}),
         new Decoration({x: 349, y: 53, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x'}),
         new Decoration({x: 439, y: 8, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x'}),
-
+        
     ]);
     
     Game.addPlatforms([
-        new Platform({x: 705, y: 150, width: '107px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box', id: 1}),
+        new Platform({x: 705, y: 150, width: '55px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_coin', id: 1}),
+        new Platform({x: 755, y: 150, width: '55px', height: '36px', css: 'background: url("/assets/basic.png") no-repeat; background-position: 0 -530px; background-size: 670px;', classList: 'surprise_box', id: 1}),
     ]);
-    
 
     Game.run(
         // player cb
         (player) => {
             Items.surpriseBox(player, 1);
+            Items.surpriseCoin(player, 1);
         }
     );
 

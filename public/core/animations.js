@@ -1,6 +1,44 @@
 class Animations {
 
     static windowSize = window.innerWidth;
+
+    static getFloorInfo() {
+        const floor = document.querySelector('#main');
+        const floorRect = floor.getBoundingClientRect();
+        const floorPosY = floorRect.height + floorRect.bottom;
+
+        return {
+            floor,
+            floorRect,
+            floorPosY
+        }
+    }
+
+    /**
+     * 
+     * @param {HTMLElement} box The box element.
+     * @param {HTMLElement} element The element to be animated.
+     */
+    static firstSurpriseCoinAnim(box, element) {
+        const floor = this.getFloorInfo();
+        const boxRect = box.getBoundingClientRect();
+        const elementRect = element.getBoundingClientRect();
+        const currentPosY = elementRect.bottom;
+
+        gsap.killTweensOf(element);
+        // Fazer o element subir
+        gsap.to(element, {
+            y: `-50px`, // sobe
+            duration: 0.4,
+            ease: "bounce.out", // saída suave,
+            onComplete: async () => {
+                await Functions.wait(200);
+                element.remove();
+            }
+        }
+    );
+
+    }
  
     /**
      * Animation for the first surprise box.
@@ -9,9 +47,7 @@ class Animations {
      * @param {HTMLElement} element The element to be animated.
      */
     static firstSurpriseBoxAnim(box, element) {
-        const floor = document.querySelector('#main');
-        const floorRect = floor.getBoundingClientRect();
-        const floorPosY = floorRect.height + floorRect.bottom;
+        const floor = this.getFloorInfo();
 
         const boxRect = box.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
@@ -21,18 +57,18 @@ class Animations {
 
         // Fazer o element subir
         gsap.to(element, {
-            y: `-20px`, // sobe
-            duration: 0.2,
+            y: `-30px`, // sobe
+            duration: 0.4,
             ease: "bounce.out", // saída suave
             onComplete: () => {
                 // va um pouco pro lado
                 gsap.to(element, {
-                    x: boxRect.width - 30,
+                    x: boxRect.width,
                     duration: 0.5,
                     onComplete: () => {
                         // desce
                         gsap.to(element, {
-                            y: -(currentPosY - floorPosY + 113),
+                            y: -(currentPosY - floor.floorPosY + 113),
                             duration: 0.5,
                             onComplete: () => {
                                 // move pra fora do documento
