@@ -75,23 +75,25 @@ class Player {
             const { detail } = e;
             const { event } = detail;
             const { player } = detail;
-            player.isMoving = true;
+
+            new Movimentation(player, event);
             
             if (event.type == 'keyup') {
                 if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                    player.css = Person.initial();
+                    player.css = Person.initial(player);
                     player.mergeCSS();
                     Movimentation.stop(player);
+                    player.isMoving = false;
                 }
 
                 if(event.key === 'ArrowUp' || event.key === ' ') {
-                    player.css = Person.initial();
+                    player.css = Person.initial(player);
                     player.mergeCSS();
                     Movimentation.jump(player);
                 }
 
             } else if (event.type == 'keydown') {
-                new Movimentation(player, event);
+                player.isMoving = true;
             }
         });
     }

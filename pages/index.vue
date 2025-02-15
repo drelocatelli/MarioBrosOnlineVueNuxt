@@ -12,6 +12,10 @@ onMounted(() => {
         new Decoration({x: 300, y: -27, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x', css: 'z-index:1;'}),
         new Decoration({x: 349, y: 53, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x'}),
         new Decoration({x: 439, y: 8, width: '132px', height: '435px', background: 'url("/assets/levels/one/coconut_tree.png") 205px 0 / 270px repeat-x'}),
+
+
+        // debug mario
+        // new Decoration({x: 800, y: 57, width: '47px', height: '62px', background: 'url("/assets/smallmariosheet.png")  100% / 560px  no-repeat', classList: 'debug-mario'}),
         
     ]);
     
@@ -21,10 +25,12 @@ onMounted(() => {
     ]);
 
     Game.run(
-        // player cb
-        (player) => {
-            Items.surpriseBox(player, 1);
-            Items.surpriseCoin(player, 1);
+        {
+            stopped: true,
+            playerCb: (player) => {
+                Items.surpriseBox(player, 1);
+                Items.surpriseCoin(player, 1);
+            }
         }
     );
 

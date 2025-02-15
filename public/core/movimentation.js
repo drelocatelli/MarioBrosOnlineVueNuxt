@@ -3,22 +3,18 @@ class Movimentation {
         switch (event.key) {
             case 'ArrowLeft':
                 Movimentation.left(vm);
-                vm.css = Person.running('left');
+                Person.running({player: vm, position: 'left'});
                 vm.mergeCSS();
                 break;
             case 'ArrowRight':
                 Movimentation.right(vm);
-                vm.css = Person.running('right');
+                Person.running({player: vm, eventType: event.type,  position: 'right'});
                 vm.mergeCSS();
                 break;
             case 'ArrowUp':
-                vm.css = Person.jumping('right');
+                Person.jumping(vm, 'right');
                 vm.mergeCSS();
                 Movimentation.jump(vm);
-                setTimeout(() => {
-                    vm.css = Person.initial();
-                    vm.mergeCSS();
-                }, 500);
                 break;
         }
     }

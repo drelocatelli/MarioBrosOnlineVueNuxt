@@ -62,8 +62,9 @@ class Game {
      * The main game loop.
      * Subscribes to the players and platforms behaviors and updates/draws them accordingly.
      * @param {Function} playerCb a callback to be called on each player, with the player as an argument.
+     * @param {boolean} stopped if true, the game loop will not be called.
      */
-    static run(playerCb) {
+    static run({stopped, playerCb} = {stopped: false}) {
         Game.currentGame.next(this);
         this.players.subscribe((players) => {
             for (const player of players) {
@@ -79,6 +80,10 @@ class Game {
                 platform.draw();
             }
         });
+
+        if(stopped) {
+            return;
+        }
         requestAnimationFrame(() => this.run(playerCb));
     }
 }

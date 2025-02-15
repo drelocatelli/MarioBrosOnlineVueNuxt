@@ -17,7 +17,7 @@ export default class Listenables {
         });
 
         this.socket.on('new_connection', (event) => {
-            const newPlayer = new Player({ id: event.id, x: 50, y: 65, background: 'url("/assets/mario.png") no-repeat', css: Person.initial() });
+            const newPlayer = new Player({ id: event.id, x: 50, y: 65, background: 'url("/assets/smallmariosheet.png") no-repeat', css: Person.initial() });
             Game.addPlayers([newPlayer]);
         });
 

@@ -53,7 +53,7 @@ class Items {
         const x = 718;
         const y = surpriseBoxRect.bottom - playerRect.height - 8;
 
-        this.surpriseCb(player, playerRect, surpriseBox, 'coin_surprise_item', 'coin_surprise_1', (playerRect.left >= 708 && playerRect.left < 755), x, y, (surpriseItem) => {
+        this.surpriseCb(player, playerRect, surpriseBox, 'coin_surprise_item', 'coin_surprise_1', (playerRect.left >= 680 && playerRect.left < 761), x, y, (surpriseItem) => {
             Animations.firstSurpriseCoinAnim(surpriseBox, surpriseItem);
         });
     }
