@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  mariobros:
+    restart: always
+    build: .
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run dev
+
