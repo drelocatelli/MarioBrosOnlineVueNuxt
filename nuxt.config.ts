@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '@Core': resolve(__dirname, './core')
   },
   devServer: {
-    port: process.env['port'] ? parseInt(process.env['port']) : 3000
+    port: process.env['port'] ? parseInt(process.env['port']) : 3000,
   },
   nitro: {
     experimental: {

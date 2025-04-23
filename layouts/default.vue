@@ -9,6 +9,9 @@ const transport = ref('N/A');
 // ---------------------------------------------------- GLOBAL SOCKET
 onMounted(() => {
     Game.socket.next(socket);
+    socket.on('new_connection', (event) => {
+        console.log(`%c Conectado: ${event.id}`, 'background:green; color:white;');
+    })
     Game.addPlatforms([
         new Platform({ x: 0, y: 0, width: '100%', height: '56px', background: 'url("/assets/level1_floor.png") repeat-x', game, id: 'main' }),
     ]);

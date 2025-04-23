@@ -21,8 +21,8 @@ class Animations {
 
         // Fazer o element subir
         gsap.to(element, {
-            y: `-20px`, // sobe
-            duration: 0.2,
+            y: `-50px`, // sobe
+            duration: 0.3,
             ease: "bounce.out", // saída suave
             onComplete: () => {
                 // va um pouco pro lado
