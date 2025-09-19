@@ -1,0 +1,15 @@
+[33m37c249b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD@{1}
+[33m855df39[m HEAD@{1}: reset: moving to 855df39
+[33m37c249b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{2}: reset: moving to HEAD@{855df39}
+[33m37c249b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{3}: reset: moving to origin/main
+[33m855df39[m HEAD@{4}: commit: update
+[33m2e0c3b6[m HEAD@{5}: commit: improve surpriseBox animation
+[33m5f53bb0[m HEAD@{6}: commit: surprise movimentation
+[33me9fcca0[m HEAD@{7}: commit: adding playercb
+[33m331088d[m HEAD@{8}: commit: adding surprise box
+[33m1cd1eec[m HEAD@{9}: commit: fix horizontal collision
+[33m225034e[m HEAD@{10}: commit: collision fix
+[33m20aa995[m HEAD@{11}: commit: fix collision top and bottom
+[33m489177d[m HEAD@{12}: commit: fix platform collision
+[33mf7cd0dc[m HEAD@{13}: commit: fix platform jump
+[33m4c6fac3[m HEAD@{14}: clone: from github.com:drelocatelli/MarioBrosOnlineVueNuxt.git

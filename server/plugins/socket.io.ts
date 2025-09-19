@@ -16,7 +16,9 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     
     // add player
     players.push(socket.id);
-    const socketIp = socket.handshake.headers["x-forwarded-for"].split(",")[0];
+    const forwardedFor = socket.handshake.headers?.["x-forwarded-for"];
+    const socketIp =
+      (forwardedFor ? forwardedFor.split(",")[0] : socket.handshake.address) || "unknown";
 
     // emit
     io.sockets.emit('login', {users, id: socket.id, address: socketIp});
